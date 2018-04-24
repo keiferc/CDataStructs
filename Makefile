@@ -12,12 +12,15 @@
 #######################################
 CC = gcc
 
-IFLAGS  = -I./api
+IFLAGS  = -I. -I./api/admin -I./api/datastructs
 CFLAGS  = -g -std=c99 -Wall -Wextra -Werror -pedantic $(IFLAGS)
 LDFLAGS = -g -L. -L./lib
 LDLIBS  = 
 
 EXECS   = test_vector
+
+ADMIN	= ./api/admin
+DS	= ./api/datastructs
 
 #######################################
 # Main Rule                           #
@@ -31,7 +34,7 @@ all: $(EXECS)
 ./obj/test_vector.o: ./test/test_vector.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-./obj/vector.o: ./src/vector.c ./api/vector.h
+./obj/vector.o: ./src/vector.c $(DS)/vector.h $(ADMIN)/assert.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 #------- Linking Stage ------#
