@@ -92,7 +92,7 @@ unsigned Vector_length(Vector_T vec);
 void *Vector_at(Vector_T vec, unsigned index);
 
 /*
- * Vector_athi
+ * Vector_hi
  *
  * Returns a void pointer to the element at index (length - 1)
  * of the given Vector
@@ -107,7 +107,7 @@ void *Vector_at(Vector_T vec, unsigned index);
 void *Vector_hi(Vector_T vec);
 
 /*
- * Vector_atlo
+ * Vector_lo
  *
  * Returns a void pointer to the element at index 0 of the
  * given Vector
