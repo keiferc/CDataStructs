@@ -13,7 +13,8 @@
 CC = gcc
 
 IFLAGS  = -I. -I./api/admin -I./api/datastructs
-CFLAGS  = -g -std=c99 -Wall -Wextra -Werror -pedantic $(IFLAGS)
+CFLAGS  = -g -std=c99 -Wall -Wextra -Werror -Wfatal-errors -pedantic \
+	  $(IFLAGS)
 LDFLAGS = -g -L. -L./lib
 LDLIBS  = -lcmods
 
@@ -35,7 +36,7 @@ all: $(EXECS)
 test_vector.o: ./test/test_vector.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-./obj/vector.o: ./src/vector.c $(DS)/vector.h $(ADMIN)/assert.h
+./obj/vector.o: ./src/vector.c $(DS)/vector.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 #------- Linking Stage ------#

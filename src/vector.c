@@ -24,15 +24,6 @@ struct vector_t {
  * Helper/Private Prototypes
  -------------------------------------*/
 /*
- * error
- * 
- * Temporary measure until finished with assert. Prints
- * out given error message to stderr and exits with exit
- * code 1
- */
-static inline void error(char *msg);
-
-/*
  * expand
  * 
  * Increases the capacity of vector from n to (2n + 1)
@@ -45,23 +36,14 @@ static inline void error(char *msg);
 Vector_T Vector_new(unsigned hint) 
 {
 	Vector_T vec;
-	char *error_msg;
 
 	vec = malloc(sizeof(struct vector_t));
-	error_msg = "Error: unable to malloc Vector_T\n";
-	
-	//TODO: Write function to throw error if failed
-	//	to alloc memory
-	//Temporary solution below
-	if (vec == NULL)
-		error(error_msg);
+	assert(vec != NULL);
 	
 	vec->capacity = hint;
 	vec->size = 0;
 	vec->array = malloc(vec->capacity * sizeof(void *));
-
-	if (vec->array == NULL)
-		error(error_msg);
+	assert(vec->array != NULL);
 	
 	return vec;
 }
@@ -69,11 +51,6 @@ Vector_T Vector_new(unsigned hint)
 /*-------------------------------------
  * Helper/Private Definitions
  -------------------------------------*/
-static inline void error(char *msg)
-{
-	fprintf(stderr, "%s\n", msg);
-	exit(1);
-}
 
 /*
 static inline void expand() {

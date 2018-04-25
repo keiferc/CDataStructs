@@ -10,10 +10,10 @@
 /*-------------------------------------
  * C Preprocessor Directives
  -------------------------------------*/
-#include "assert.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <assert.h>
 
 #ifndef VECTOR_H_
 #define VECTOR_H_
