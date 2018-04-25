@@ -3,7 +3,7 @@
  *      author:         @keiferchiang
  *      date:           23 Apr. 2018
  *      version:        0.0.1
- * 
+ *
  *      description:    Interface for the Vector module
  */
 
@@ -28,18 +28,33 @@ typedef struct vector_t *Vector_T;
  -------------------------------------*/
 /*
  * Vector_new
- * 
+ *
  * Given a hint of the default size, creates and returns
- * a pointer to an instance of a Vector.
- * 
+ * a pointer to an instance of a Vector
+ *
  * CREs         n/a
  * UREs         n/a
- * 
- * @param       int -           Hint of the default size of
+ *
+ * @param       int             Hint of the default size of
  * 				the Vector
- * @return      Vector_T -      A pointer to an instance of
+ * @return      Vector_T        A pointer to an instance of
  * 				an expandable array
  */
 Vector_T Vector_new(unsigned hint);
+
+/*
+ * Vector_free
+ *
+ * Recycles heap allocated memory for Vector. It is the
+ * client's responsibility to free every element in
+ * the Vector before freeing the Vector itself
+ *
+ * CREs         vec == NULL
+ * UREs         elements in vec != NULL
+ *
+ * @param       Vector_T        Vector to be freed
+ * @return      n/a
+ */
+void Vector_free(Vector_T *vec);
 
 #endif

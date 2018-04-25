@@ -3,9 +3,9 @@
 #       author:         @keiferchiang
 #       date:           23 Apr. 2018
 #       version:        0.0.1
-# 
+#
 #       description:    Makefile for custom C data structures
-# 
+#
 
 #######################################
 # Variables                           #
@@ -50,7 +50,7 @@ lib: $(OBJS)
 	ar rc ./lib/libcmods.a $^; ranlib ./lib/libcmods.a
 
 clean:
-	rm -rf $(EXECS) *.o *.dSYM
+	rm -rf $(EXECS) *.o *.dSYM $(OBJS)
 
 
 
