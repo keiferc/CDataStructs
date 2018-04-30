@@ -28,7 +28,7 @@ struct vector_t {
  *
  * Increases the capacity of vector from n to (2n + 1)
  */
-//static inline void expand(Vector_T vec);
+static inline void expand(Vector_T vec);
 
 /*-------------------------------------
  * Function Definitions
@@ -63,16 +63,62 @@ void Vector_free(Vector_T *vec)
         *vec = NULL;
 }
 
-/*-------------------------------------
- * Helper/Private Definitions
- -------------------------------------*/
-unsigned Vector_length(Vector_T vec) {
+unsigned Vector_length(Vector_T vec)
+{
         assert(vec != NULL);
         return vec->size;
 }
 
-/*
-static inline void expand() {
-        //TODO
+void *Vector_at(Vector_T vec, unsigned index)
+{
+        assert(vec != NULL);
+
+        /*
+        while (index >= vec->capacity)
+                expand(vec);
+
+        return vec->array[index];
+        */
+
+        (void) index;
+        unsigned cap;
+        fprintf(stderr, "Testing expand\n");
+
+        cap = vec->capacity;
+        fprintf(stderr, "Orig cap: %u\n", cap);
+
+        expand(vec);
+        cap = vec->capacity;
+        fprintf(stderr, "New cap: %u\n", cap);
+
+        expand(vec);
+        cap = vec->capacity;
+        fprintf(stderr, "New cap2: %u\n", cap);
+
+        return NULL;
 }
-*/
+
+/*-------------------------------------
+ * Helper/Private Definitions
+ -------------------------------------*/
+static inline void expand(Vector_T vec) {
+        Array_T new_arr;
+        unsigned new_cap;
+        unsigned i;
+
+        assert(vec != NULL);
+
+        new_cap = (vec->capacity * 2) + 1;
+        new_arr = malloc(new_cap * sizeof(void *));
+
+        for (i = 0; i < vec->capacity; i++) {
+                new_arr[i] = (void *) (uintptr_t) vec->array[i];
+
+                fprintf(stderr, "new_arr[%u]: %p\n", i, new_arr[i]);
+                fprintf(stderr, "old_arr[%u]: %p\n", i, vec->array[i]);
+        }
+
+        free(vec->array);
+        vec->array = new_arr;
+        vec->capacity = new_cap;
+}
