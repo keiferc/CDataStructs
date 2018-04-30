@@ -112,7 +112,7 @@ static inline void expand(Vector_T vec) {
         new_arr = malloc(new_cap * sizeof(void *));
 
         for (i = 0; i < vec->capacity; i++) {
-                new_arr[i] = (void *) (uintptr_t) vec->array[i];
+                new_arr[i] = vec->array[i];
 
                 fprintf(stderr, "new_arr[%u]: %p\n", i, new_arr[i]);
                 fprintf(stderr, "old_arr[%u]: %p\n", i, vec->array[i]);
