@@ -66,6 +66,10 @@ void Vector_free(Vector_T *vec)
 /*-------------------------------------
  * Helper/Private Definitions
  -------------------------------------*/
+unsigned Vector_length(Vector_T vec) {
+        assert(vec != NULL);
+        return vec->size;
+}
 
 /*
 static inline void expand() {

@@ -16,9 +16,9 @@ IFLAGS  = -I. -I./include
 CFLAGS  = -g -std=c99 -Wall -Wextra -Werror -Wfatal-errors -pedantic \
 	  $(IFLAGS)
 LDFLAGS = -g -L. -L./lib
-LDLIBS  = -lcmods
+LDLIBS  = #-lcmods
 
-EXECS   = test_vector lib
+EXECS   = test_vector
 OBJS	= ./obj/vector.o
 
 #######################################
