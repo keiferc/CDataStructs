@@ -176,11 +176,13 @@ void test_vector_lo(Vector_T vec)
         null_vec = Vector_new(0);
         out = Vector_getlo(null_vec);
         //assert(out != NULL); //expected assertion
+        fprintf(stderr, "null_vec length: %u\n", Vector_length(null_vec));
 
         //Vector_setlo(null_vec, null_test); //expected assertion
         Vector_setlo(null_vec, test2); //should work
         out = Vector_getlo(null_vec); //should work
         fprintf(stderr, "first elem in null_vec: %u\n", out->x);
+        fprintf(stderr, "null_vec length: %u\n", Vector_length(null_vec));
 
         fprintf(stderr, ">>>>>>>>>> Tests Passed.\n\n");
         free(test2);
