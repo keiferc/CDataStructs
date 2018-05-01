@@ -13,9 +13,8 @@ typedef struct test {
  -------------------------------------*/
 void test_vector_length(Vector_T vec);
 void test_vector_set(Vector_T vec, Test_T test1);
-void test_vector_setters(Vector_T vec, Test_T test1);
 void test_vector_get(Vector_T vec);
-void test_vector_getters(Vector_T vec);
+void test_vector_setgets(Vector_T vec);
 
 /*-------------------------------------
  * Main
@@ -40,6 +39,7 @@ int main(int argc, char *argv[]) {
         test_vector_length(vec);
         test_vector_set(vec, test1);
         test_vector_get(vec);
+        test_vector_setgets(vec);
 
         //Cleanup
         free(test1);
@@ -63,7 +63,7 @@ void test_vector_length(Vector_T vec)
 
         //Edge Cases
         (void) null_vec;
-        fprintf(stderr, "\nEdge Cases ---------\n");
+        fprintf(stderr, "Edge Cases ---------\n");
         //length = Vector_length(null_vec); //expected assertion
 
         fprintf(stderr, ">>>>>>>>>> Tests Passed.\n\n");
@@ -95,7 +95,7 @@ void test_vector_set(Vector_T vec, Test_T test1)
 
         //Edge Cases
         (void) null_vec;
-        fprintf(stderr, "\nEdge Cases ---------\n");
+        fprintf(stderr, "Edge Cases ---------\n");
         //Vector_set(vec, n_ptr, 1000); //expected assertion
         //Vector_set(vec, NULL, 0); // expected assertion
         //Vector_set(null_vec, test1, 1); // expected assertion
@@ -104,9 +104,31 @@ void test_vector_set(Vector_T vec, Test_T test1)
         fprintf(stderr, ">>>>>>>>>> Tests Passed.\n\n");
 }
 
-void test_vector_setters(Vector_T vec, Test_T test1)
+void test_vector_setgets(Vector_T vec)
 {
-        (void) vec, (void) test1;
+        Test_T out;
+        Test_T test2 = malloc(sizeof(struct test));
+        assert(test2 != NULL);
+        test2->x = 4321;
+        test2->y = -1234;
+
+        fprintf(stderr, ">>>>>>>>>>>>>>>>>>>> Testing Vector_setgets\n");
+
+        //Valid Cases
+        fprintf(stderr, "Valid Cases --------\n");
+        Vector_setlo(vec, test2);
+        out = Vector_getlo(vec);
+        fprintf(stderr, "lo x: %u\nlo y: %d\n", out->x, out->y);
+        fprintf(stderr, "vec length: %u\n", Vector_length(vec));
+        out = Vector_get(vec, 1);
+        fprintf(stderr, "next x: %u\nnext y: %d\n", out->x, out->y);
+
+        //Edge Cases
+        fprintf(stderr, "Edge Cases ---------\n");
+
+
+        fprintf(stderr, ">>>>>>>>>> Tests Passed.\n\n");
+        free(test2);
 }
 
 void test_vector_get(Vector_T vec)
@@ -145,9 +167,4 @@ void test_vector_get(Vector_T vec)
         */
 
         fprintf(stderr, ">>>>>>>>>> Tests Passed.\n\n");
-}
-
-void test_vector_getters(Vector_T vec)
-{
-        (void) vec;
 }

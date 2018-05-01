@@ -79,7 +79,7 @@ unsigned Vector_length(Vector_T vec);
  * Vector_get
  *
  * Returns a void pointer to the element in the given index
- * of the given Vector
+ * of the given Vector. Returns NULL if Vector is empty
  *
  * CREs         vec == NULL
  *              index out of bounds
@@ -96,7 +96,7 @@ void *Vector_get(Vector_T vec, unsigned index);
  * Vector_gethi
  *
  * Returns a void pointer to the element at index (length - 1)
- * of the given Vector
+ * of the given Vector. Returns NULL if Vector is empty
  *
  * CREs         vec == NULL
  * UREs         n/a
@@ -111,7 +111,7 @@ void *Vector_gethi(Vector_T vec);
  * Vector_getlo
  *
  * Returns a void pointer to the element at index 0 of the
- * given Vector
+ * given Vector. Returns NULL if Vector is empty
  *
  * CREs         vec == NULL
  * UREs         n/a
@@ -151,6 +151,7 @@ void Vector_set(Vector_T vec, void *elem, unsigned index);
  * Vector
  *
  * CREs         vec == NULL
+ *              elem == NULL
  * UREs         n/a
  *
  * @param       Vector_T        Vector in which to insert
@@ -167,6 +168,7 @@ void Vector_sethi(Vector_T vec, void *elem);
  * Vector
  *
  * CREs         vec == NULL
+ *              elem == NULL
  * UREs         n/a
  *
  * @param       Vector_T        Vector in which to insert

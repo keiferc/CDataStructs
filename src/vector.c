@@ -127,6 +127,17 @@ void Vector_sethi(Vector_T vec, void *elem)
 
 void Vector_setlo(Vector_T vec, void *elem)
 {
+        unsigned length;
+        unsigned i;
+
+        assert(vec != NULL);
+        assert(elem != NULL);
+
+        length = vec->size;
+
+        for (i = length; i > 0; i--)
+                Vector_set(vec, Vector_get(vec, i - 1), i);
+
         Vector_set(vec, elem, 0);
 }
 
