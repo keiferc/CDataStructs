@@ -74,9 +74,32 @@ unsigned Vector_length(Vector_T vec)
 void *Vector_get(Vector_T vec, unsigned index)
 {
         assert(vec != NULL);
-        assert(index < vec->size);
+        assert(index <= vec->size);
 
-        return (void *) vec->array[index];
+        if (vec->size == 0)
+                return NULL;
+
+        return vec->array[index];
+}
+
+void *Vector_gethi(Vector_T vec)
+{
+        assert(vec != NULL);
+
+        if (vec->size == 0)
+                return NULL;
+
+        return vec->array[(vec->size - 1)];
+}
+
+void *Vector_getlo(Vector_T vec)
+{
+        assert(vec != NULL);
+
+        if (vec->size == 0)
+                return NULL;
+
+        return vec->array[0];
 }
 
 //////////////////////////////////
@@ -95,6 +118,16 @@ void Vector_set(Vector_T vec, void *elem, unsigned index)
                 expand(vec);
 
         vec->array[index] = elem;
+}
+
+void Vector_sethi(Vector_T vec, void *elem)
+{
+        Vector_set(vec, elem, vec->size);
+}
+
+void Vector_setlo(Vector_T vec, void *elem)
+{
+        Vector_set(vec, elem, 0);
 }
 
 //////////////////////////////////

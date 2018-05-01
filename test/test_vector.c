@@ -13,7 +13,9 @@ typedef struct test {
  -------------------------------------*/
 void test_vector_length(Vector_T vec);
 void test_vector_set(Vector_T vec, Test_T test1);
+void test_vector_setters(Vector_T vec, Test_T test1);
 void test_vector_get(Vector_T vec);
+void test_vector_getters(Vector_T vec);
 
 /*-------------------------------------
  * Main
@@ -102,6 +104,11 @@ void test_vector_set(Vector_T vec, Test_T test1)
         fprintf(stderr, ">>>>>>>>>> Tests Passed.\n\n");
 }
 
+void test_vector_setters(Vector_T vec, Test_T test1)
+{
+        (void) vec, (void) test1;
+}
+
 void test_vector_get(Vector_T vec)
 {
         Vector_T null_vec = NULL;
@@ -138,4 +145,9 @@ void test_vector_get(Vector_T vec)
         */
 
         fprintf(stderr, ">>>>>>>>>> Tests Passed.\n\n");
+}
+
+void test_vector_getters(Vector_T vec)
+{
+        (void) vec;
 }
