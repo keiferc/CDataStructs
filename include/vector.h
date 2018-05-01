@@ -93,7 +93,7 @@ unsigned Vector_length(Vector_T vec);
 void *Vector_get(Vector_T vec, unsigned index);
 
 /*
- * Vector_getback
+ * Vector_gethi
  *
  * Returns a void pointer to the element at index (length - 1)
  * of the given Vector
@@ -105,10 +105,10 @@ void *Vector_get(Vector_T vec, unsigned index);
  *                              element
  * @return      void *          void pointer to element
  */
-void *Vector_getback(Vector_T vec);
+void *Vector_gethi(Vector_T vec);
 
 /*
- * Vector_getfront
+ * Vector_getlo
  *
  * Returns a void pointer to the element at index 0 of the
  * given Vector
@@ -120,7 +120,7 @@ void *Vector_getback(Vector_T vec);
  *                              element
  * @return      void *          void pointer to element
  */
-void *Vector_getfront(Vector_T vec);
+void *Vector_getlo(Vector_T vec);
 
 //////////////////////////////////
 //      Setter Functions        //
@@ -145,7 +145,7 @@ void *Vector_getfront(Vector_T vec);
 void Vector_set(Vector_T vec, void *elem, unsigned index);
 
 /*
- * Vector_pushback
+ * Vector_sethi
  *
  * Inserts the given element into the end of the
  * Vector
@@ -158,10 +158,10 @@ void Vector_set(Vector_T vec, void *elem, unsigned index);
  * @param       void *          Element to insert
  * @return      n/a
  */
-void Vector_pushback(Vector_T vec, void *elem);
+void Vector_sethi(Vector_T vec, void *elem);
 
 /*
- * Vector_pushfront
+ * Vector_setlo
  *
  * Inserts the given element into the front of the
  * Vector
@@ -174,7 +174,7 @@ void Vector_pushback(Vector_T vec, void *elem);
  * @param       void *          Element to insert
  * @return      n/a
  */
-void Vector_pushback(Vector_T vec, void *elem);
+void Vector_setlo(Vector_T vec, void *elem);
 
 //////////////////////////////////
 //      Remove Functions        //
@@ -195,7 +195,7 @@ void Vector_pushback(Vector_T vec, void *elem);
 void Vector_remove(Vector_T vec, unsigned index);
 
 /*
- * Vector_popback
+ * Vector_removehi
  *
  * Removes the element at the end of the Vector
  *
@@ -206,10 +206,10 @@ void Vector_remove(Vector_T vec, unsigned index);
  *                              element
  * @return      n/a
  */
-void Vector_popback(Vector_T vec);
+void Vector_removehi(Vector_T vec);
 
 /*
- * Vector_popfront
+ * Vector_removelo
  *
  * Removes the element at the front of the Vector
  *
@@ -220,6 +220,6 @@ void Vector_popback(Vector_T vec);
  *                              element
  * @return      n/a
  */
-void Vector_popfront(Vector_T vec);
+void Vector_removelo(Vector_T vec);
 
 #endif
