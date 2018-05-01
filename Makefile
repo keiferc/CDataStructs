@@ -16,7 +16,7 @@ IFLAGS  = -I. -I./include
 CFLAGS  = -g -std=c99 -Wall -Wextra -Werror -Wfatal-errors -pedantic \
 	  $(IFLAGS)
 LDFLAGS = -g -L. -L./lib
-LDLIBS  = #-lcmods
+LDLIBS  = #-lcdatastructs
 
 EXECS   = test_vector
 OBJS	= ./obj/vector.o
@@ -44,10 +44,8 @@ test_vector: test_vector.o ./obj/vector.o
 # Custom Rules                        #
 #######################################
 lib: $(OBJS)
-	ar rc ./lib/libcmods.a $^; ranlib ./lib/libcmods.a
+	ar rc ./lib/libcdatastructs.a $^; \
+	ranlib ./lib/libcdatastructs.a
 
 clean:
 	rm -rf $(EXECS) *.o *.dSYM $(OBJS)
-
-
-
