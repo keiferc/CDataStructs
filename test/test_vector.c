@@ -14,7 +14,7 @@ typedef struct test {
 void test_vector_length(Vector_T vec);
 void test_vector_set(Vector_T vec, Test_T test1);
 void test_vector_get(Vector_T vec);
-void test_vector_setgets(Vector_T vec);
+void test_vector_lo(Vector_T vec);
 
 /*-------------------------------------
  * Main
@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
         test_vector_length(vec);
         test_vector_set(vec, test1);
         test_vector_get(vec);
-        test_vector_setgets(vec);
+        test_vector_lo(vec);
 
         //Cleanup
         free(test1);
@@ -104,33 +104,6 @@ void test_vector_set(Vector_T vec, Test_T test1)
         fprintf(stderr, ">>>>>>>>>> Tests Passed.\n\n");
 }
 
-void test_vector_setgets(Vector_T vec)
-{
-        Test_T out;
-        Test_T test2 = malloc(sizeof(struct test));
-        assert(test2 != NULL);
-        test2->x = 4321;
-        test2->y = -1234;
-
-        fprintf(stderr, ">>>>>>>>>>>>>>>>>>>> Testing Vector_setgets\n");
-
-        //Valid Cases
-        fprintf(stderr, "Valid Cases --------\n");
-        Vector_setlo(vec, test2);
-        out = Vector_getlo(vec);
-        fprintf(stderr, "lo x: %u\nlo y: %d\n", out->x, out->y);
-        fprintf(stderr, "vec length: %u\n", Vector_length(vec));
-        out = Vector_get(vec, 1);
-        fprintf(stderr, "next x: %u\nnext y: %d\n", out->x, out->y);
-
-        //Edge Cases
-        fprintf(stderr, "Edge Cases ---------\n");
-
-
-        fprintf(stderr, ">>>>>>>>>> Tests Passed.\n\n");
-        free(test2);
-}
-
 void test_vector_get(Vector_T vec)
 {
         Vector_T null_vec = NULL;
@@ -167,4 +140,49 @@ void test_vector_get(Vector_T vec)
         */
 
         fprintf(stderr, ">>>>>>>>>> Tests Passed.\n\n");
+}
+
+void test_vector_lo(Vector_T vec)
+{
+        Vector_T null_vec = NULL;
+        Test_T null_test = NULL;
+        Test_T out;
+        Test_T test2 = malloc(sizeof(struct test));
+        assert(test2 != NULL);
+        test2->x = 4321;
+        test2->y = -1234;
+
+        fprintf(stderr, ">>>>>>>>>>>>>>>>>>>> Testing getlo amd setlo\n");
+
+        //Valid Cases
+        fprintf(stderr, "Valid Cases --------\n");
+        Vector_setlo(vec, test2);
+        out = Vector_getlo(vec);
+        fprintf(stderr, "lo x: %u\nlo y: %d\n", out->x, out->y);
+        fprintf(stderr, "vec length: %u\n", Vector_length(vec));
+
+        out = Vector_get(vec, 1);
+        fprintf(stderr, "next x: %u\nnext y: %d\n", out->x, out->y);
+
+        //Edge Cases
+        (void) null_vec, (void) null_test;
+        fprintf(stderr, "Edge Cases ---------\n");
+        //Vector_setlo(null_vec, test2); //expected assertion
+        //Vector_setlo(vec, null_test); //expected assertion
+        //Vector_setlo(null_vec, null_test); //expected assertion
+        //out = Vector_getlo(null_vec); //expected assertion
+
+        //Empty vector
+        null_vec = Vector_new(0);
+        out = Vector_getlo(null_vec);
+        //assert(out != NULL); //expected assertion
+
+        //Vector_setlo(null_vec, null_test); //expected assertion
+        Vector_setlo(null_vec, test2); //should work
+        out = Vector_getlo(null_vec); //should work
+        fprintf(stderr, "first elem in null_vec: %u\n", out->x);
+
+        fprintf(stderr, ">>>>>>>>>> Tests Passed.\n\n");
+        free(test2);
+        Vector_free(&null_vec);
 }
