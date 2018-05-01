@@ -18,3 +18,5 @@ Customizable abstract, polymorphic C data structures for personal use. Just slow
 
 ### Note
 Largely based on the modules of David R. Hanson's _C Interfaces and Implementations_.
+
+Work in progress.
