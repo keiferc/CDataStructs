@@ -36,7 +36,7 @@ typedef struct vector_t *Vector_T;
  * CREs         n/a
  * UREs         n/a
  *
- * @param       int             Hint of the default size of
+ * @param       unsigned        Hint of the default size of
  * 				the Vector
  * @return      Vector_T        A pointer to an instance of
  * 				an expandable array
@@ -138,8 +138,8 @@ void *Vector_getfront(Vector_T vec);
  *
  * @param       Vector_T        Vector in which to insert
  *                              element
- * @param       unsigned        Index of element in Vector
  * @param       void *          Element to insert
+ * @param       unsigned        Index of element in Vector
  * @return      n/a
  */
 void Vector_set(Vector_T vec, void *elem, unsigned index);
