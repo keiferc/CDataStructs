@@ -105,7 +105,8 @@ void Vector_set(Vector_T vec, void *elem, unsigned index)
 /*-------------------------------------
  * Helper/Private Definitions
  -------------------------------------*/
-static inline void expand(Vector_T vec) {
+static inline void expand(Vector_T vec)
+{
         Array_T new_arr;
         unsigned new_cap;
 
