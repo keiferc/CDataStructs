@@ -115,7 +115,9 @@ static inline void expand(Vector_T vec) {
         new_arr = malloc(new_cap * sizeof(void *));
         assert(new_arr != NULL);
 
-        memcpy(new_arr, vec->array, vec->size * sizeof(void *));
+        if (vec->capacity != 0)
+                memcpy(new_arr, vec->array, vec->size *
+                       sizeof(void *));
 
         free(vec->array);
         vec->array = new_arr;
