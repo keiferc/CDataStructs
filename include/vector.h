@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <stdint.h>
+#include <string.h>
 #include <assert.h>
 
 #ifndef VECTOR_H_
@@ -58,9 +58,9 @@ Vector_T Vector_new(unsigned hint);
  */
 void Vector_free(Vector_T *vec);
 
-////////////////////////////////////////////
-//-----------------TODO-------------------//
-////////////////////////////////////////////
+//////////////////////////////////
+//      Getter Functions        //
+//////////////////////////////////
 /*
  * Vector_length
  *
@@ -76,13 +76,13 @@ void Vector_free(Vector_T *vec);
 unsigned Vector_length(Vector_T vec);
 
 /*
- * Vector_at
+ * Vector_get
  *
  * Returns a void pointer to the element in the given index
- * of the given Vector. The client can use this function to
- * both put and retrieve the element at the given index
+ * of the given Vector
  *
  * CREs         vec == NULL
+ *              index out of bounds
  * UREs         n/a
  *
  * @param       Vector_T        Vector containing queried
@@ -90,10 +90,10 @@ unsigned Vector_length(Vector_T vec);
  * @param       unsigned        Index of element in Vector
  * @return      void *          void pointer to element
  */
-void *Vector_at(Vector_T vec, unsigned index);
+void *Vector_get(Vector_T vec, unsigned index);
 
 /*
- * Vector_hi
+ * Vector_getback
  *
  * Returns a void pointer to the element at index (length - 1)
  * of the given Vector
@@ -105,10 +105,10 @@ void *Vector_at(Vector_T vec, unsigned index);
  *                              element
  * @return      void *          void pointer to element
  */
-void *Vector_hi(Vector_T vec);
+void *Vector_getback(Vector_T vec);
 
 /*
- * Vector_lo
+ * Vector_getfront
  *
  * Returns a void pointer to the element at index 0 of the
  * given Vector
@@ -120,6 +120,106 @@ void *Vector_hi(Vector_T vec);
  *                              element
  * @return      void *          void pointer to element
  */
-void *Vector_lo(Vector_T vec);
+void *Vector_getfront(Vector_T vec);
+
+//////////////////////////////////
+//      Setter Functions        //
+//////////////////////////////////
+/*
+ * Vector_set
+ *
+ * Inserts the given element into the given index of the
+ * Vector
+ *
+ * CREs         vec == NULL
+ *              elem == NULL
+ *              index > length of vector + 1
+ * UREs         n/a
+ *
+ * @param       Vector_T        Vector in which to insert
+ *                              element
+ * @param       unsigned        Index of element in Vector
+ * @param       void *          Element to insert
+ * @return      n/a
+ */
+void Vector_set(Vector_T vec, void *elem, unsigned index);
+
+/*
+ * Vector_pushback
+ *
+ * Inserts the given element into the end of the
+ * Vector
+ *
+ * CREs         vec == NULL
+ * UREs         n/a
+ *
+ * @param       Vector_T        Vector in which to insert
+ *                              element
+ * @param       void *          Element to insert
+ * @return      n/a
+ */
+void Vector_pushback(Vector_T vec, void *elem);
+
+/*
+ * Vector_pushfront
+ *
+ * Inserts the given element into the front of the
+ * Vector
+ *
+ * CREs         vec == NULL
+ * UREs         n/a
+ *
+ * @param       Vector_T        Vector in which to insert
+ *                              element
+ * @param       void *          Element to insert
+ * @return      n/a
+ */
+void Vector_pushback(Vector_T vec, void *elem);
+
+//////////////////////////////////
+//      Remove Functions        //
+//////////////////////////////////
+/*
+ * Vector_remove
+ *
+ * Removes the element at the given index in the Vector
+ *
+ * CREs         vec == NULL
+ * UREs         n/a
+ *
+ * @param       Vector_T        Vector containing queried
+ *                              element
+ * @param       unsigned        Index of element in Vector
+ * @return      n/a
+ */
+void Vector_remove(Vector_T vec, unsigned index);
+
+/*
+ * Vector_popback
+ *
+ * Removes the element at the end of the Vector
+ *
+ * CREs         vec == NULL
+ * UREs         n/a
+ *
+ * @param       Vector_T        Vector containing queried
+ *                              element
+ * @return      n/a
+ */
+void Vector_popback(Vector_T vec);
+
+/*
+ * Vector_popfront
+ *
+ * Removes the element at the front of the Vector
+ *
+ * CREs         vec == NULL
+ * UREs         n/a
+ *
+ * @param       Vector_T        Vector containing queried
+ *                              element
+ * @return      n/a
+ */
+void Vector_popfront(Vector_T vec);
 
 #endif

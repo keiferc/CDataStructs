@@ -57,46 +57,50 @@ void Vector_free(Vector_T *vec)
                 free((*vec)->array);
         }
 
-        (*vec)->size = 0;
-        (*vec)->capacity = 0;
         free(*vec);
         *vec = NULL;
 }
 
+//////////////////////////////////
+//      Getter Functions        //
+//////////////////////////////////
 unsigned Vector_length(Vector_T vec)
 {
         assert(vec != NULL);
+
         return vec->size;
 }
 
-void *Vector_at(Vector_T vec, unsigned index)
+void *Vector_get(Vector_T vec, unsigned index)
 {
         assert(vec != NULL);
+        assert(index < vec->size);
 
-        /*
-        while (index >= vec->capacity)
+        return (void *) vec->array[index];
+}
+
+//////////////////////////////////
+//      Setter Functions        //
+//////////////////////////////////
+void Vector_set(Vector_T vec, void *elem, unsigned index)
+{
+        assert(vec != NULL);
+        assert(elem != NULL);
+        assert(index <= vec->size);
+
+        if (index == vec->size)
+                vec->size++;
+
+        if (vec->size >= vec->capacity)
                 expand(vec);
 
-        return vec->array[index];
-        */
-
-        (void) index;
-        unsigned cap;
-        fprintf(stderr, "Testing expand\n");
-
-        cap = vec->capacity;
-        fprintf(stderr, "Orig cap: %u\n", cap);
-
-        expand(vec);
-        cap = vec->capacity;
-        fprintf(stderr, "New cap: %u\n", cap);
-
-        expand(vec);
-        cap = vec->capacity;
-        fprintf(stderr, "New cap2: %u\n", cap);
-
-        return NULL;
+        vec->array[index] = elem;
 }
+
+//////////////////////////////////
+//      Remove Functions        //
+//////////////////////////////////
+
 
 /*-------------------------------------
  * Helper/Private Definitions
@@ -104,19 +108,14 @@ void *Vector_at(Vector_T vec, unsigned index)
 static inline void expand(Vector_T vec) {
         Array_T new_arr;
         unsigned new_cap;
-        unsigned i;
 
         assert(vec != NULL);
 
         new_cap = (vec->capacity * 2) + 1;
         new_arr = malloc(new_cap * sizeof(void *));
+        assert(new_arr != NULL);
 
-        for (i = 0; i < vec->capacity; i++) {
-                new_arr[i] = vec->array[i];
-
-                fprintf(stderr, "new_arr[%u]: %p\n", i, new_arr[i]);
-                fprintf(stderr, "old_arr[%u]: %p\n", i, vec->array[i]);
-        }
+        memcpy(new_arr, vec->array, vec->size * sizeof(void *));
 
         free(vec->array);
         vec->array = new_arr;
