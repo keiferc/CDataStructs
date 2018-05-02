@@ -1,7 +1,7 @@
 /*
  *      filename:       vector.c
  *      author:         @keiferchiang
- *      date:           23 Apr. 2018
+ *      date:           2 May 2018
  *      version:        0.0.1
  *
  *      description:    Implementation of the Vector module

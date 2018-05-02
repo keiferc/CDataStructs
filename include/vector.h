@@ -1,7 +1,7 @@
 /*
  *      filename:       vector.h
  *      author:         @keiferchiang
- *      date:           23 Apr. 2018
+ *      date:           2 Apr 2018
  *      version:        0.0.1
  *
  *      description:    Interface for the Vector module
