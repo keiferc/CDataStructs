@@ -160,6 +160,22 @@ void Vector_remove(Vector_T vec, unsigned index)
         (vec->size)--;
 }
 
+void Vector_removehi(Vector_T vec)
+{
+        assert(vec != NULL);
+        assert(vec->size != 0);
+
+        (vec->size)--;
+}
+
+void Vector_removelo(Vector_T vec)
+{
+        assert(vec != NULL);
+        assert(vec->size != 0);
+
+        Vector_remove(vec, 0);
+}
+
 /*-------------------------------------
  * Helper/Private Definitions
  -------------------------------------*/

@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
         test_vector_pops(vec);
 
         //Cleanup
-        //free(test1);
+        free(test1);
         Vector_free(&vec);
 }
 
@@ -289,5 +289,54 @@ void test_vector_remove(Vector_T vec)
 
 void test_vector_pops(Vector_T vec)
 {
-        (void) vec;
+        Vector_T null_vec = NULL;
+        Test_T out;
+        Test_T test2 = malloc(sizeof(struct test));
+        assert(test2 != NULL);
+        test2->x = 56789;
+        test2->y = -876;
+
+        fprintf(stderr, ">>>>>>>>>>>>>>>>>>>> Testing removhi & removlo\n");
+
+        //Valid Cases
+        fprintf(stderr, "Valid Cases --------\n");
+        Vector_setlo(vec, test2);
+        out = Vector_getlo(vec);
+        fprintf(stderr, "length1: %u\n", Vector_length(vec));
+        fprintf(stderr, "lo1->x: %u\nlo1->y: %d\n", out->x, out->y);
+
+        Vector_removelo(vec);
+        out = Vector_getlo(vec);
+        fprintf(stderr, "lo2->x: %u\nlo2->y: %d\n", out->x, out->y);
+        fprintf(stderr, "length2: %u\n", Vector_length(vec));
+
+        Vector_sethi(vec, test2);
+        out = Vector_gethi(vec);
+        fprintf(stderr, "length3: %u\n", Vector_length(vec));
+        fprintf(stderr, "lo3->x: %u\nlo3->y: %d\n", out->x, out->y);
+
+        Vector_removehi(vec);
+        out = Vector_gethi(vec);
+        fprintf(stderr, "lo4->x: %u\nlo4->y: %d\n", out->x, out->y);
+        fprintf(stderr, "length4: %u\n", Vector_length(vec));
+
+        fprintf(stderr, "removing all\n");
+        while (Vector_length(vec) != 0) {
+                //Vector_removehi(vec);
+                Vector_removelo(vec);
+        }
+        fprintf(stderr, "length3: %u\n", Vector_length(vec));
+
+        //Edge Cases
+        (void) null_vec;
+        fprintf(stderr, "Edge Cases ---------\n");
+        //Vector_removelo(null_vec); //expected assertion
+        //Vector_removehi(null_vec); //expected assertion
+
+        //Empty Vector
+        //Vector_removelo(vec); //expected assertion
+        //Vector_removehi(vec); //expected assertion
+
+        fprintf(stderr, ">>>>>>>>>> Tests Passed.\n\n");
+        free(test2);
 }
