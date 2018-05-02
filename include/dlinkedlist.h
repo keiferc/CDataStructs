@@ -1,10 +1,10 @@
 /*
- *      filename:       linkedlist.c
+ *      filename:       dlinkedlist.c
  *      author:         @keiferchiang
  *      date:           2 May 2018
  *      version:        0.0.1
  *
- *      description:    Interface of the LinkedList module
+ *      description:    Interface of the DLinkedList module
  */
 /*-------------------------------------
  * C Preprocessor Directives
@@ -15,213 +15,213 @@
 #include <string.h>
 #include <assert.h>
 
-#ifndef LINKEDLIST_H_
-#define LINKEDLIST_H_
+#ifndef DLINKEDLIST_H_
+#define DLINKEDLIST_H_
 
 /*-------------------------------------
  * Representation
  -------------------------------------*/
-typedef struct linkedlist_t *LinkedList_T;
+typedef struct dlinkedlist_t *DLinkedList_T;
 
 /*-------------------------------------
  * Function Prototypes
  -------------------------------------*/
 /*
- * LinkedList_new
+ * DLinkedList_new
  *
  * Given a hint of the default size, creates and returns
- * a pointer to an instance of a LinkedList
+ * a pointer to an instance of a DLinkedList
  *
  * CREs         n/a
  * UREs         n/a
  *
  * @param       unsigned        Hint of the default size of
- * 				the LinkedList
- * @return      LinkedList_T    A pointer to an instance of
+ * 				the DLinkedList
+ * @return      DLinkedList_T    A pointer to an instance of
  * 				a linked-list
  */
-LinkedList_T LinkedList_new(unsigned hint);
+DLinkedList_T DLinkedList_new(unsigned hint);
 
 /*
- * LinkedList_free
+ * DLinkedList_free
  *
- * Recycles heap allocated memory for LinkedList. It is the
+ * Recycles heap allocated memory for DLinkedList. It is the
  * client's responsibility to free every element in the
- * LinkedList before freeing the LinkedList itself
+ * DLinkedList before freeing the DLinkedList itself
  *
  * CREs         list == NULL
  * UREs         elements in list != NULL
  *
- * @param       LinkedList_T    LinkedList to be freed
+ * @param       DLinkedList_T    DLinkedList to be freed
  * @return      n/a
  */
-void LinkedList_free(LinkedList_T *list);
+void DLinkedList_free(DLinkedList_T *list);
 
 //////////////////////////////////
 //      Getter Functions        //
 //////////////////////////////////
 /*
- * LinkedList_length
+ * DLinkedList_length
  *
- * Returns the length of the given LinkedList
+ * Returns the length of the given DLinkedList
  *
  * CREs         list == NULL
  * UREs         n/a
  *
- * @param       LinkedList_T    LinkedList whose length is to
+ * @param       DLinkedList_T    DLinkedList whose length is to
  *                              be returned
- * @return      unsigned        Length of the LinkedList
+ * @return      unsigned        Length of the DLinkedList
  */
-unsigned LinkedList_length(LinkedList_T list);
+unsigned DLinkedList_length(DLinkedList_T list);
 
 /*
- * LinkedList_get
+ * DLinkedList_get
  *
  * Returns a void pointer to the element in the given index
- * of the given LinkedList. Returns NULL if LinkedList is empty
+ * of the given DLinkedList. Returns NULL if DLinkedList is empty
  *
  * CREs         list == NULL
  *              index out of bounds
  * UREs         getting an element that was previously freed
  *
- * @param       LinkedList_T    LinkedList containing queried
+ * @param       DLinkedList_T    DLinkedList containing queried
  *                              element
- * @param       unsigned        Index of element in LinkedList
+ * @param       unsigned        Index of element in DLinkedList
  * @return      void *          void pointer to element
  */
-void *LinkedList_get(LinkedList_T list, unsigned index);
+void *DLinkedList_get(DLinkedList_T list, unsigned index);
 
 /*
- * LinkedList_gethi
+ * DLinkedList_gethi
  *
  * Returns a void pointer to the element at index (length - 1)
- * of the given LinkedList. Returns NULL if LinkedList is empty
+ * of the given DLinkedList. Returns NULL if DLinkedList is empty
  *
  * CREs         list == NULL
  * UREs         getting an element that was previously freed
  *
- * @param       LinkedList_T    LinkedList containing queried
+ * @param       DLinkedList_T   DLinkedList containing queried
  *                              element
  * @return      void *          void pointer to element
  */
-void *LinkedList_gethi(LinkedList_T list);
+void *DLinkedList_gethi(DLinkedList_T list);
 
 /*
- * LinkedList_getlo
+ * DLinkedList_getlo
  *
  * Returns a void pointer to the element at index 0 of the
- * given LinkedList. Returns NULL if LinkedList is empty
+ * given DLinkedList. Returns NULL if DLinkedList is empty
  *
  * CREs         list == NULL
  * UREs         getting an element that was previously freed
  *
- * @param       LinkedList_T    LinkedList containing queried
+ * @param       DLinkedList_T   DLinkedList containing queried
  *                              element
  * @return      void *          void pointer to element
  */
-void *LinkedList_getlo(LinkedList_T list);
+void *DLinkedList_getlo(DLinkedList_T list);
 
 //////////////////////////////////
 //      Setter Functions        //
 //////////////////////////////////
 /*
- * LinkedList_set
+ * DLinkedList_set
  *
  * Inserts the given element into the given index of the
- * LinkedList
+ * DLinkedList
  *
  * CREs         list == NULL
- *              index > length of listtor + 1
+ *              index > length of list
  * UREs         n/a
  *
- * @param       LinkedList_T    LinkedList in which to insert
+ * @param       DLinkedList_T   DLinkedList in which to insert
  *                              element
  * @param       void *          Element to insert
- * @param       unsigned        Index of element in LinkedList
+ * @param       unsigned        Index of element in DLinkedList
  * @return      n/a
  */
-void LinkedList_set(LinkedList_T list, void *elem, unsigned index);
+void DLinkedList_set(DLinkedList_T list, void *elem, unsigned index);
 
 /*
- * LinkedList_sethi
+ * DLinkedList_sethi
  *
- * Inserts the given element into the end of the LinkedList
+ * Inserts the given element into the end of the DLinkedList
  *
  * CREs         list == NULL
  * UREs         n/a
  *
- * @param       LinkedList_T    LinkedList in which to insert
+ * @param       DLinkedList_T   DLinkedList in which to insert
  *                              element
  * @param       void *          Element to insert
  * @return      n/a
  */
-void LinkedList_sethi(LinkedList_T list, void *elem);
+void DLinkedList_sethi(DLinkedList_T list, void *elem);
 
 /*
- * LinkedList_setlo
+ * DLinkedList_setlo
  *
- * Inserts the given element into the front of the LinkedList
+ * Inserts the given element into the front of the DLinkedList
  *
  * CREs         list == NULL
  * UREs         n/a
  *
- * @param       LinkedList_T    LinkedList in which to insert
+ * @param       DLinkedList_T   DLinkedList in which to insert
  *                              element
  * @param       void *          Element to insert
  * @return      n/a
  */
-void LinkedList_setlo(LinkedList_T list, void *elem);
+void DLinkedList_setlo(DLinkedList_T list, void *elem);
 
 //////////////////////////////////
 //      Remove Functions        //
 //////////////////////////////////
 /*
- * LinkedList_remove
+ * DLinkedList_remove
  *
- * Removes the element at the given index in the LinkedList.
+ * Removes the element at the given index in the DLinkedList.
  * It is the client's responsibility to free the element
  * in the given index
  *
  * CREs         list == NULL
  * UREs         n/a
  *
- * @param       LinkedList_T    LinkedList containing queried
+ * @param       DLinkedList_T   DLinkedList containing queried
  *                              element
- * @param       unsigned        Index of element in LinkedList
+ * @param       unsigned        Index of element in DLinkedList
  * @return      n/a
  */
-void LinkedList_remove(LinkedList_T list, unsigned index);
+void DLinkedList_remove(DLinkedList_T list, unsigned index);
 
 /*
- * LinkedList_removehi
+ * DLinkedList_removehi
  *
- * Removes the element at the end of the LinkedList. It is
+ * Removes the element at the end of the DLinkedList. It is
  * the client's responsibility to free the element in the
  * given index
  *
  * CREs         list == NULL
  * UREs         n/a
  *
- * @param       LinkedList_T    LinkedList containing queried
+ * @param       DLinkedList_T   DLinkedList containing queried
  *                              element
  * @return      n/a
  */
-void LinkedList_removehi(LinkedList_T list);
+void DLinkedList_removehi(DLinkedList_T list);
 
 /*
- * LinkedList_removelo
+ * DLinkedList_removelo
  *
- * Removes the element at the front of the LinkedList. It is
+ * Removes the element at the front of the DLinkedList. It is
  * the client's responsibility to free the element in the
  * given index
  *
  * CREs         list == NULL
  * UREs         n/a
  *
- * @param       LinkedList_T    LinkedList containing queried
+ * @param       DLinkedList_T   DLinkedList containing queried
  *                              element
  * @return      n/a
  */
-void LinkedList_removelo(LinkedList_T list);
+void DLinkedList_removelo(DLinkedList_T list);
 
 #endif

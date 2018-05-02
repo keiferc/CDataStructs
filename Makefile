@@ -18,8 +18,8 @@ CFLAGS  = -g -std=c99 -Wall -Wextra -Werror -Wfatal-errors -pedantic \
 LDFLAGS = -g -L. -L./lib
 LDLIBS  = #-lcdatastructs
 
-EXECS   = test_vector test_list
-OBJS	= ./obj/vector.o ./obj/linkedlist.o
+EXECS   = test_vector test_dlist
+OBJS	= ./obj/vector.o ./obj/dlinkedlist.o
 
 #######################################
 # Main Rule                           #
@@ -34,21 +34,21 @@ all: $(EXECS)
 test_vector.o: ./test/test_vector.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-test_list.o: ./test/test_list.c
+test_dlist.o: ./test/test_dlist.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Data Structures
 ./obj/vector.o: ./src/vector.c ./include/vector.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-./obj/linkedlist.o: ./src/linkedlist.c ./include/linkedlist.h
+./obj/dlinkedlist.o: ./src/dlinkedlist.c ./include/dlinkedlist.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 #------- Linking Stage ------#
 test_vector: test_vector.o ./obj/vector.o
 	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS)
 
-test_list: test_list.o ./obj/linkedlist.o
+test_dlist: test_dlist.o ./obj/dlinkedlist.o
 	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS)
 
 #######################################
