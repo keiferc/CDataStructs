@@ -21,16 +21,16 @@
  * Representation
  -------------------------------------*/
 typedef struct node_t {
-        void *elem;
-        struct node *next;
-        struct node *prev;
+	void *elem;
+	struct node *next;
+	struct node *prev;
 } *Node_T;
 
 struct linkedlist_t {
-        Node_T front;
-        Note_T tail;
-        unsigned capacity;
-        unsigned size;
+	Node_T front;
+	Node_T tail;
+	unsigned capacity;
+	unsigned size;
 };
 
 /*-------------------------------------
