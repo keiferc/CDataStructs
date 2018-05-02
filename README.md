@@ -5,24 +5,24 @@ Customizable abstract, polymorphic C data structures for personal use. Just slow
 
 ### Implementation Details
 
-|     Data Structure     |   Implementation Status   |        Interface        |   Implementation    | Notes                              |
-|:----------------------:|:-------------------------:|:-----------------------:|:-------------------:|:-----------------------------------|
-|         Vector         |         Complete          |  include/vector.h       |  src/vector.h       |  O(n) front ops; O(1) back ops     |
-|         Matrix         |          Waiting          |                         |                     |                                    |
-|   Singly Linked-List   |          Waiting          |                         |                     |                                    |
-|   Doubly Linked-List   |        In progress        |  include/dlinkedlist.h  |  src/dlinkedlist.h  | Working on implementation          |
-|  Circular Linked-List  |          Waiting          |                         |                     |                                    |
-|          Stack         |          Waiting          |                         |                     |                                    |
-|          Queue         |          Waiting          |                         |                     |                                    |
-|          Heap          |          Waiting          |                         |                     |                                    |
-|       Binary Tree      |          Waiting          |                         |                     |                                    |
-|   Binary Search Tree   |          Waiting          |                         |                     |                                    |
-|        AVL Tree        |          Waiting          |                         |                     |                                    |
-|       N-Ary Tree       |          Waiting          |                         |                     |                                    |
-|          Trie          |          Waiting          |                         |                     |                                    |
-|          Graph         |          Waiting          |                         |                     |                                    |
-|        Hashtable       |          Waiting          |                         |                     |                                    |
-|        Xmas Tree       |          Waiting          |                         |                     |  Tree linked to a heap of gifts    |
+|     Data Structure     |   Implementation Status   |        Interface        |   Implementation    |
+|:----------------------:|:-------------------------:|:-----------------------:|:-------------------:|
+|         Vector         |         Complete          |  include/vector.h       |  src/vector.h       |
+|         Matrix         |          Waiting          |                         |                     |
+|   Singly Linked-List   |          Waiting          |                         |                     |
+|   Doubly Linked-List   |        In progress        |  include/dlinkedlist.h  |  src/dlinkedlist.h  |
+|  Circular Linked-List  |          Waiting          |                         |                     |
+|          Stack         |          Waiting          |                         |                     |
+|          Queue         |          Waiting          |                         |                     |
+|          Heap          |          Waiting          |                         |                     |
+|       Binary Tree      |          Waiting          |                         |                     |
+|   Binary Search Tree   |          Waiting          |                         |                     |
+|        AVL Tree        |          Waiting          |                         |                     |
+|       N-Ary Tree       |          Waiting          |                         |                     |
+|          Trie          |          Waiting          |                         |                     |
+|          Graph         |          Waiting          |                         |                     |
+|        Hashtable       |          Waiting          |                         |                     |
+|        Xmas Tree       |          Waiting          |                         |                     ||
 
 ### Note
 Largely based on the modules of David R. Hanson's _C Interfaces and Implementations_.
