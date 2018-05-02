@@ -16,6 +16,8 @@ void test_vector_set(Vector_T vec, Test_T test1);
 void test_vector_get(Vector_T vec);
 void test_vector_lo(Vector_T vec);
 void test_vector_hi(Vector_T vec);
+void test_vector_remove(Vector_T vec);
+void test_vector_pops(Vector_T vec);
 
 /*-------------------------------------
  * Main
@@ -39,12 +41,14 @@ int main(int argc, char *argv[]) {
         //Unit Tests
         test_vector_length(vec);
         test_vector_set(vec, test1);
-        test_vector_get(vec);
-        test_vector_lo(vec);
-        test_vector_hi(vec);
+        //test_vector_get(vec);
+        //test_vector_lo(vec);
+        //test_vector_hi(vec);
+        //test_vector_remove(vec);
+        test_vector_pops(vec);
 
         //Cleanup
-        free(test1);
+        //free(test1);
         Vector_free(&vec);
 }
 
@@ -91,7 +95,7 @@ void test_vector_set(Vector_T vec, Test_T test1)
         Vector_set(vec, test1, Vector_length(vec));
         fprintf(stderr, "new length: %u\n", Vector_length(vec));
 
-        for (i = 0; i < 10000; i++) {
+        for (i = 0; i < 10; i++) {
                 Vector_set(vec, test1, i);
         }
 
@@ -237,4 +241,53 @@ void test_vector_hi(Vector_T vec)
         fprintf(stderr, ">>>>>>>>>> Tests Passed.\n\n");
         free(test2);
         Vector_free(&null_vec);
+}
+
+void test_vector_remove(Vector_T vec)
+{
+        Vector_T null_vec = NULL;
+        Test_T out;
+        Test_T test2 = malloc(sizeof(struct test));
+        assert(test2 != NULL);
+        test2->x = 1212121;
+        test2->y = -2121212;
+
+        fprintf(stderr, ">>>>>>>>>>>>>>>>>>>> Testing Vector_remove\n");
+
+        //Valid Cases
+        fprintf(stderr, "Valid Cases --------\n");
+        Vector_setlo(vec, test2);
+        out = Vector_getlo(vec);
+        fprintf(stderr, "length1: %u\n", Vector_length(vec));
+        fprintf(stderr, "lo1->x: %u\nlo1->y: %d\n", out->x, out->y);
+
+        free(test2);
+        test2 = NULL;
+        Vector_remove(vec, 0);
+        out = Vector_getlo(vec);
+        fprintf(stderr, "lo2->x: %u\nlo2->y: %d\n", out->x, out->y);
+        fprintf(stderr, "length2: %u\n", Vector_length(vec));
+
+        fprintf(stderr, "removing all\n");
+        free(out);
+        while (Vector_length(vec) != 0)
+                Vector_remove(vec, 0);
+        fprintf(stderr, "length3: %u\n", Vector_length(vec));
+
+        //Edge Cases
+        (void) null_vec;
+        fprintf(stderr, "Edge Cases ---------\n");
+        //Vector_remove(null_vec, 0); //expected assertion
+
+        //Empty Vector
+        //Vector_remove(vec, 0); //expected assertion
+        //Vector_remove(vec, -1); //expected assertion
+
+        fprintf(stderr, ">>>>>>>>>> Tests Passed.\n\n");
+        //free(test2);
+}
+
+void test_vector_pops(Vector_T vec)
+{
+        (void) vec;
 }

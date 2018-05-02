@@ -108,11 +108,10 @@ void *Vector_getlo(Vector_T vec)
 void Vector_set(Vector_T vec, void *elem, unsigned index)
 {
         assert(vec != NULL);
-        assert(elem != NULL);
         assert(index <= vec->size);
 
         if (index == vec->size)
-                vec->size++;
+                (vec->size)++;
 
         if (vec->size >= vec->capacity)
                 expand(vec);
@@ -133,7 +132,6 @@ void Vector_setlo(Vector_T vec, void *elem)
         unsigned i;
 
         assert(vec != NULL);
-        assert(elem != NULL);
 
         length = vec->size;
 
@@ -146,7 +144,21 @@ void Vector_setlo(Vector_T vec, void *elem)
 //////////////////////////////////
 //      Remove Functions        //
 //////////////////////////////////
+void Vector_remove(Vector_T vec, unsigned index)
+{
+        unsigned length;
+        unsigned i;
 
+        assert(vec != NULL);
+        assert(index < vec->size);
+
+        length = vec->size;
+
+        for (i = index; i < length - 1; i++)
+                Vector_set(vec, Vector_get(vec, i + 1), i);
+
+        (vec->size)--;
+}
 
 /*-------------------------------------
  * Helper/Private Definitions

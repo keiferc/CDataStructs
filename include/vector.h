@@ -83,7 +83,7 @@ unsigned Vector_length(Vector_T vec);
  *
  * CREs         vec == NULL
  *              index out of bounds
- * UREs         n/a
+ * UREs         getting an element that was previously freed
  *
  * @param       Vector_T        Vector containing queried
  *                              element
@@ -99,7 +99,7 @@ void *Vector_get(Vector_T vec, unsigned index);
  * of the given Vector. Returns NULL if Vector is empty
  *
  * CREs         vec == NULL
- * UREs         n/a
+ * UREs         getting an element that was previously freed
  *
  * @param       Vector_T        Vector containing queried
  *                              element
@@ -114,7 +114,7 @@ void *Vector_gethi(Vector_T vec);
  * given Vector. Returns NULL if Vector is empty
  *
  * CREs         vec == NULL
- * UREs         n/a
+ * UREs         getting an element that was previously freed
  *
  * @param       Vector_T        Vector containing queried
  *                              element
@@ -132,7 +132,6 @@ void *Vector_getlo(Vector_T vec);
  * Vector
  *
  * CREs         vec == NULL
- *              elem == NULL
  *              index > length of vector + 1
  * UREs         n/a
  *
@@ -151,7 +150,6 @@ void Vector_set(Vector_T vec, void *elem, unsigned index);
  * Vector
  *
  * CREs         vec == NULL
- *              elem == NULL
  * UREs         n/a
  *
  * @param       Vector_T        Vector in which to insert
@@ -168,7 +166,6 @@ void Vector_sethi(Vector_T vec, void *elem);
  * Vector
  *
  * CREs         vec == NULL
- *              elem == NULL
  * UREs         n/a
  *
  * @param       Vector_T        Vector in which to insert
@@ -184,7 +181,9 @@ void Vector_setlo(Vector_T vec, void *elem);
 /*
  * Vector_remove
  *
- * Removes the element at the given index in the Vector
+ * Removes the element at the given index in the Vector.
+ * It is the client's responsibility to free the element
+ * in the given index
  *
  * CREs         vec == NULL
  * UREs         n/a
@@ -199,7 +198,9 @@ void Vector_remove(Vector_T vec, unsigned index);
 /*
  * Vector_removehi
  *
- * Removes the element at the end of the Vector
+ * Removes the element at the end of the Vector It is
+ * the client's responsibility to free the element in
+ * the given index
  *
  * CREs         vec == NULL
  * UREs         n/a
@@ -213,7 +214,9 @@ void Vector_removehi(Vector_T vec);
 /*
  * Vector_removelo
  *
- * Removes the element at the front of the Vector
+ * Removes the element at the front of the Vector It is
+ * the client's responsibility to free the element in
+ * the given index
  *
  * CREs         vec == NULL
  * UREs         n/a
