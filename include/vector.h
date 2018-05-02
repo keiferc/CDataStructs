@@ -214,9 +214,9 @@ void Vector_removehi(Vector_T vec);
 /*
  * Vector_removelo
  *
- * Removes the element at the front of the Vector It is
- * the client's responsibility to free the element in
- * the given index
+ * Removes the element at the front of the Vector. It
+ * is the client's responsibility to free the element
+ * in the given index
  *
  * CREs         vec == NULL
  * UREs         n/a
