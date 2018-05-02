@@ -7,10 +7,10 @@ Customizable abstract, polymorphic C data structures for personal use. Just slow
 
 |     Data Structure     |   Implementation Status   |        Interface        |   Implementation    |
 |:----------------------:|:-------------------------:|:-----------------------:|:-------------------:|
-|         Vector         |         Complete          |  include/vector.h       |  src/vector.h       |
+|         Vector         |         Complete          |  include/vector.h       |  src/vector.c       |
 |         Matrix         |          Waiting          |                         |                     |
 |   Singly Linked-List   |          Waiting          |                         |                     |
-|   Doubly Linked-List   |        In progress        |  include/dlinkedlist.h  |  src/dlinkedlist.h  |
+|   Doubly Linked-List   |        In progress        |  include/dlinkedlist.h  |  src/dlinkedlist.c  |
 |  Circular Linked-List  |          Waiting          |                         |                     |
 |          Stack         |          Waiting          |                         |                     |
 |          Queue         |          Waiting          |                         |                     |
