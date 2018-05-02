@@ -15,6 +15,7 @@ void test_vector_length(Vector_T vec);
 void test_vector_set(Vector_T vec, Test_T test1);
 void test_vector_get(Vector_T vec);
 void test_vector_lo(Vector_T vec);
+void test_vector_hi(Vector_T vec);
 
 /*-------------------------------------
  * Main
@@ -40,6 +41,7 @@ int main(int argc, char *argv[]) {
         test_vector_set(vec, test1);
         test_vector_get(vec);
         test_vector_lo(vec);
+        test_vector_hi(vec);
 
         //Cleanup
         free(test1);
@@ -152,7 +154,7 @@ void test_vector_lo(Vector_T vec)
         test2->x = 4321;
         test2->y = -1234;
 
-        fprintf(stderr, ">>>>>>>>>>>>>>>>>>>> Testing getlo amd setlo\n");
+        fprintf(stderr, ">>>>>>>>>>>>>>>>>>>> Testing getlo and setlo\n");
 
         //Valid Cases
         fprintf(stderr, "Valid Cases --------\n");
@@ -181,6 +183,54 @@ void test_vector_lo(Vector_T vec)
         //Vector_setlo(null_vec, null_test); //expected assertion
         Vector_setlo(null_vec, test2); //should work
         out = Vector_getlo(null_vec); //should work
+        fprintf(stderr, "first elem in null_vec: %u\n", out->x);
+        fprintf(stderr, "null_vec length: %u\n", Vector_length(null_vec));
+
+        fprintf(stderr, ">>>>>>>>>> Tests Passed.\n\n");
+        free(test2);
+        Vector_free(&null_vec);
+}
+
+void test_vector_hi(Vector_T vec)
+{
+        Vector_T null_vec = NULL;
+        Test_T null_test = NULL;
+        Test_T out;
+        Test_T test2 = malloc(sizeof(struct test));
+        assert(test2 != NULL);
+        test2->x = 42;
+        test2->y = -42;
+
+        fprintf(stderr, ">>>>>>>>>>>>>>>>>>>> Testing gethi and sethi\n");
+
+        //Valid Cases
+        fprintf(stderr, "Valid Cases --------\n");
+        out = Vector_gethi(vec);
+        fprintf(stderr, "hi1 x: %u\nhi1 y: %d\n", out->x, out->y);
+        fprintf(stderr, "vec length: %u\n", Vector_length(vec));
+        Vector_sethi(vec, test2);
+        out = Vector_gethi(vec);
+        fprintf(stderr, "hi2 x: %u\nhi2 y: %d\n", out->x, out->y);
+        fprintf(stderr, "vec length: %u\n", Vector_length(vec));
+
+
+        //Edge Cases
+        (void) null_vec, (void) null_test;
+        fprintf(stderr, "Edge Cases ---------\n");
+        //Vector_sethi(null_vec, test2); //expected assertion
+        //Vector_sethi(vec, null_test); //expected assertion
+        //Vector_sethi(null_vec, null_test); //expected assertion
+        //out = Vector_gethi(null_vec); //expected assertion
+
+        //Empty vector
+        null_vec = Vector_new(0);
+        out = Vector_gethi(null_vec);
+        //assert(out != NULL); //expected assertion
+        fprintf(stderr, "null_vec length: %u\n", Vector_length(null_vec));
+
+        //Vector_setlo(null_vec, null_test); //expected assertion
+        Vector_sethi(null_vec, test2); //should work
+        out = Vector_gethi(null_vec); //should work
         fprintf(stderr, "first elem in null_vec: %u\n", out->x);
         fprintf(stderr, "null_vec length: %u\n", Vector_length(null_vec));
 

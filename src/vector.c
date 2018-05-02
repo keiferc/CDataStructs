@@ -122,6 +122,8 @@ void Vector_set(Vector_T vec, void *elem, unsigned index)
 
 void Vector_sethi(Vector_T vec, void *elem)
 {
+        assert(vec != NULL);
+
         Vector_set(vec, elem, vec->size);
 }
 
