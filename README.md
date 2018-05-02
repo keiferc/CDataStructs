@@ -7,12 +7,12 @@ Customizable abstract, polymorphic C data structures for personal use. Just slow
 
 |     Data Structure     |   Implementation Status   |
 |:----------------------:|:-------------------------:|
-|         Vector         |        In progress        |
+|         Vector         |         Complete          |
 |          Stack         |          Waiting          |
 |          Queue         |          Waiting          |
 |          Heap          |          Waiting          |
 |         Matrix         |          Waiting          |
-|       Linked-List      |          Waiting          |
+|       Linked-List      |        In progress        |
 |       Binary Tree      |          Waiting          |
 |   Binary Search Tree   |          Waiting          |
 |          Trie          |          Waiting          |
