@@ -51,9 +51,8 @@ void Vector_free(Vector_T *vec)
         assert(vec != NULL);
         assert(*vec != NULL);
 
-        if ((*vec)->array != NULL) {
+        if ((*vec)->array != NULL)
                 free((*vec)->array);
-        }
 
         free(*vec);
         *vec = NULL;
