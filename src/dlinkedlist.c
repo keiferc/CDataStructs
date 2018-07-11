@@ -12,7 +12,16 @@
  *                      optimization allows the DLinkedList to be a
  *                      base for LIFO and FIFO data structures while
  *                      allowing said structures to run most
- *                      operations with a time complexity of O(1)
+ *                      operations with a time complexity of O(1).
+ *                      list_start and list_end keep track of the
+ *                      effective client-side linked list, whereas
+ *                      front and tail keep track of the entire
+ *                      malloc'd list. See "design" for an example of
+ *                      a three-element linked list. 
+ * 
+ *      design:         front <-> [ ] <-> [ ] <-> [ ] <-> [ ] <-> tail
+ *                                         ^               ^
+ *                                    list_start       list_end
  */
 
 #include "dlinkedlist.h"
@@ -29,6 +38,8 @@ typedef struct node_t {
 struct dlinkedlist_t {
         Node_T front;
         Node_T tail;
+        Node_T list_start;
+        Node_T list_end;
         unsigned capacity;
         unsigned size;
 };
@@ -37,19 +48,25 @@ struct dlinkedlist_t {
  * Helper/Private Prototypes
  -------------------------------------*/
 /*
+ * Mallocs and inits a new node
+ */
+Node_T Node_new(Node_T prev, Node_T next, void *elem);
+
+/*
+ * Removes the current node from the list and frees it
+ */
+void Node_free(DLinkedList_T list, Node_T *curr);
+
+/*
  * Mallocs "hint" empty nodes. Helper to constructor
  */
 Node_T malloc_hint(Node_T prev, unsigned hint);
 
 /*
- * Mallocs and inits a new node
+ * Removes the given node from the list. Helper to 
+ * DLinkedList_remove
  */
-Node_T new_node(Node_T prev, Node_T next, void *elem);
-
-/*
- * Removes and frees the given node
- */
-void delete_node(Node_T curr);
+void remove_node(DLinkedList_T list, Node_T curr);
 
 /*-------------------------------------
  * Function Definitions
@@ -63,12 +80,10 @@ DLinkedList_T DLinkedList_new(unsigned hint)
 
         list->capacity = hint;
         list->size = 0;
-
         list->front = malloc_hint(NULL, hint);
-        assert(list->front != NULL);
-
         list->tail = list->front + (hint * sizeof(struct node_t));
-        assert(list->tail != NULL);
+        list->list_start = list->front;
+        list->list_end = list->front;
 
         return list;
 }
@@ -78,7 +93,20 @@ void DLinkedList_free(DLinkedList_T *list)
         assert(list != NULL);
         assert(*list != NULL);
 
-        //TODO
+        while((*list)->capacity > 0) {
+                //debug
+                fprintf(stderr, "free cap: %u\n", (*list)->capacity);
+
+                Node_free(*list, &((*list)->front));
+        }
+
+        (*list)->front = NULL;
+        (*list)->tail = NULL;
+        (*list)->list_start = NULL;
+        (*list)->list_end = NULL;
+
+        free(*list);
+        *list = NULL;
 }
 
 //////////////////////////////////
@@ -147,27 +175,7 @@ void DLinkedList_removelo(DLinkedList_T list)
 /*-------------------------------------
  * Helper/Private Definitions
  -------------------------------------*/
-Node_T malloc_hint(Node_T prev, unsigned hint)
-{
-        Node_T node = NULL;
-
-        if (hint == 0)
-                return NULL; 
-
-        // node = malloc(sizeof(struct node_t));
-        // assert(node != NULL);
-
-        // node->elem = NULL;
-        // node->prev = prev;
-        // node->next = malloc_hint(node, hint - 1);
-
-        node = new_node(prev, malloc_hint(node, hint - 1), NULL);
-        assert(node != NULL);
-
-        return node;
-}
-
-Node_T new_node(Node_T prev, Node_T next, void *elem)
+Node_T Node_new(Node_T prev, Node_T next, void *elem)
 {
         Node_T node = NULL;
 
@@ -181,7 +189,68 @@ Node_T new_node(Node_T prev, Node_T next, void *elem)
         return node;
 }
 
-void delete_node(Node_T curr)
+//TOFIX: Error here?
+void Node_free(DLinkedList_T list, Node_T *curr)
 {
-        
+        Node_T *temp = NULL;
+
+        assert(list != NULL);
+        assert(curr != NULL);
+        assert(*curr != NULL);
+        assert(list->capacity != 0);
+
+        temp = curr;
+
+        if (list->capacity > 1) {
+                if (*temp == list->front) {
+                        ((*temp)->next)->prev = NULL;
+                        list->front = (*temp)->next;
+                } else if (*curr == list->tail) {
+                        ((*temp)->prev)->next = NULL;
+                        list->tail = (*temp)->prev;
+                } else {
+                        ((*temp)->next)->prev = (*temp)->prev;
+                        (((*temp)->next)->prev)->next = (*temp)->next;
+                }
+        }
+
+        list->capacity--;
+        (*curr)->elem = NULL;
+        (*curr)->next = NULL;
+        (*curr)->prev = NULL;
+        free(*curr);
+        *curr = NULL;
+        *temp = NULL;
+}
+
+Node_T malloc_hint(Node_T prev, unsigned hint)
+{
+        Node_T node = NULL;
+
+        if (hint == 0)
+                return NULL; 
+
+        node = Node_new(prev, malloc_hint(node, hint - 1), NULL);
+        assert(node != NULL);
+
+        return node;
+}
+
+void remove_node(DLinkedList_T list, Node_T curr)
+{
+        assert(list != NULL);
+        assert(curr != NULL);
+        assert(list->size != 0);
+
+        if (list->size > 1) {
+                if (curr == list->list_start) {
+                        list->list_start = curr->next;
+                } else if (curr == list->list_end) {
+                        list->list_end = curr->prev;
+                } else {
+                        Node_free(list, &curr);  
+                }
+        }
+
+        list->size--;
 }
