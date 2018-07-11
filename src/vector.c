@@ -24,8 +24,6 @@ struct vector_t {
  * Helper/Private Prototypes
  -------------------------------------*/
 /*
- * expand
- *
  * Increases the capacity of vector from n to (2n + 1)
  */
 static inline void expand(Vector_T vec);

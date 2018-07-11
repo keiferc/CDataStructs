@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 
 	(void) argc, (void) argv;
 
-	list = DLinkedList_new(10);
+	list = DLinkedList_new(5);
 	assert(list != NULL);
 
 	test1 = malloc(sizeof(struct test));

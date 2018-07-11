@@ -1,7 +1,7 @@
 # C Data Structures
 
 ### Description
-Customizable abstract, polymorphic C data structures for personal use. Just slowly implementing for fun.
+Customizable abstract, polymorphic C data structures for personal use. Just slowly implementing for fun and for de-stressing.
 
 ### Implementation Details
 

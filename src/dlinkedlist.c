@@ -22,8 +22,8 @@
  -------------------------------------*/
 typedef struct node_t {
         void *elem;
-        struct node *next;
-        struct node *prev;
+        struct node_t *next;
+        struct node_t *prev;
 } *Node_T;
 
 struct dlinkedlist_t {
@@ -36,20 +36,49 @@ struct dlinkedlist_t {
 /*-------------------------------------
  * Helper/Private Prototypes
  -------------------------------------*/
+/*
+ * Mallocs "hint" empty nodes. Helper to constructor
+ */
+Node_T malloc_hint(Node_T prev, unsigned hint);
 
+/*
+ * Mallocs and inits a new node
+ */
+Node_T new_node(Node_T prev, Node_T next, void *elem);
+
+/*
+ * Removes and frees the given node
+ */
+void delete_node(Node_T curr);
 
 /*-------------------------------------
  * Function Definitions
  -------------------------------------*/
 DLinkedList_T DLinkedList_new(unsigned hint)
 {
-        (void) hint;
-        return NULL;
+        DLinkedList_T list;
+
+        list = malloc(sizeof(struct dlinkedlist_t));
+        assert(list != NULL);
+
+        list->capacity = hint;
+        list->size = 0;
+
+        list->front = malloc_hint(NULL, hint);
+        assert(list->front != NULL);
+
+        list->tail = list->front + (hint * sizeof(struct node_t));
+        assert(list->tail != NULL);
+
+        return list;
 }
 
 void DLinkedList_free(DLinkedList_T *list)
 {
-        (void) list;
+        assert(list != NULL);
+        assert(*list != NULL);
+
+        //TODO
 }
 
 //////////////////////////////////
@@ -118,3 +147,41 @@ void DLinkedList_removelo(DLinkedList_T list)
 /*-------------------------------------
  * Helper/Private Definitions
  -------------------------------------*/
+Node_T malloc_hint(Node_T prev, unsigned hint)
+{
+        Node_T node = NULL;
+
+        if (hint == 0)
+                return NULL; 
+
+        // node = malloc(sizeof(struct node_t));
+        // assert(node != NULL);
+
+        // node->elem = NULL;
+        // node->prev = prev;
+        // node->next = malloc_hint(node, hint - 1);
+
+        node = new_node(prev, malloc_hint(node, hint - 1), NULL);
+        assert(node != NULL);
+
+        return node;
+}
+
+Node_T new_node(Node_T prev, Node_T next, void *elem)
+{
+        Node_T node = NULL;
+
+        node = malloc(sizeof(struct node_t));
+        assert(node != NULL);
+
+        node->elem = elem;
+        node->prev = prev;
+        node->next = next;
+
+        return node;
+}
+
+void delete_node(Node_T curr)
+{
+        
+}
