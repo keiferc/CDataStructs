@@ -93,12 +93,8 @@ void DLinkedList_free(DLinkedList_T *list)
         assert(list != NULL);
         assert(*list != NULL);
 
-        while((*list)->capacity > 0) {
-                //debug
-                fprintf(stderr, "free cap: %u\n", (*list)->capacity);
-
+        while((*list)->capacity > 0)
                 Node_free(*list, &((*list)->front));
-        }
 
         (*list)->front = NULL;
         (*list)->tail = NULL;
@@ -189,38 +185,36 @@ Node_T Node_new(Node_T prev, Node_T next, void *elem)
         return node;
 }
 
-//TOFIX: Error here?
 void Node_free(DLinkedList_T list, Node_T *curr)
 {
-        Node_T *temp = NULL;
+        Node_T temp = NULL;
 
         assert(list != NULL);
         assert(curr != NULL);
         assert(*curr != NULL);
         assert(list->capacity != 0);
 
-        temp = curr;
+        temp = *curr;
 
         if (list->capacity > 1) {
-                if (*temp == list->front) {
-                        ((*temp)->next)->prev = NULL;
-                        list->front = (*temp)->next;
-                } else if (*curr == list->tail) {
-                        ((*temp)->prev)->next = NULL;
-                        list->tail = (*temp)->prev;
+                if (temp == list->front) {
+                        (temp->next)->prev = NULL;
+                        *curr = temp->next;
+                } else if (temp == list->tail) {
+                        (temp->prev)->next = NULL;
+                        *curr = (temp)->prev;
                 } else {
-                        ((*temp)->next)->prev = (*temp)->prev;
-                        (((*temp)->next)->prev)->next = (*temp)->next;
+                        ((*curr)->next)->prev = (*curr)->prev;
+                        (((*curr)->next)->prev)->next = (*curr)->next;
                 }
         }
 
         list->capacity--;
-        (*curr)->elem = NULL;
-        (*curr)->next = NULL;
-        (*curr)->prev = NULL;
-        free(*curr);
-        *curr = NULL;
-        *temp = NULL;
+        temp->elem = NULL;
+        temp->next = NULL;
+        temp->prev = NULL;
+        free(temp);
+        temp = NULL;
 }
 
 Node_T malloc_hint(Node_T prev, unsigned hint)
