@@ -71,7 +71,7 @@ unsigned Vector_length(Vector_T vec)
 void *Vector_get(Vector_T vec, unsigned index)
 {
         assert(vec != NULL);
-        assert(index <= vec->size);
+        assert(index < vec->size);
 
         if (vec->size == 0)
                 return NULL;

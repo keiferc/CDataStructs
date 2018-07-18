@@ -41,10 +41,10 @@ int main(int argc, char *argv[]) {
         //Unit Tests
         test_vector_length(vec);
         test_vector_set(vec, test1);
-        //test_vector_get(vec);
-        //test_vector_lo(vec);
-        //test_vector_hi(vec);
-        //test_vector_remove(vec);
+        test_vector_get(vec);
+        test_vector_lo(vec);
+        test_vector_hi(vec);
+        test_vector_remove(vec);
         test_vector_pops(vec);
 
         //Cleanup
@@ -179,20 +179,20 @@ void test_vector_lo(Vector_T vec)
         //out = Vector_getlo(null_vec); //expected assertion
 
         //Empty vector
-        null_vec = Vector_new(0);
-        out = Vector_getlo(null_vec);
+        //null_vec = Vector_new(0);
+        //out = Vector_getlo(null_vec);
         //assert(out != NULL); //expected assertion
-        fprintf(stderr, "null_vec length: %u\n", Vector_length(null_vec));
+        //fprintf(stderr, "null_vec length: %u\n", Vector_length(null_vec));
 
         //Vector_setlo(null_vec, null_test); //expected assertion
-        Vector_setlo(null_vec, test2); //should work
-        out = Vector_getlo(null_vec); //should work
-        fprintf(stderr, "first elem in null_vec: %u\n", out->x);
-        fprintf(stderr, "null_vec length: %u\n", Vector_length(null_vec));
+        //Vector_setlo(null_vec, test2); //should work
+        //out = Vector_getlo(null_vec); //should work
+        //fprintf(stderr, "first elem in null_vec: %u\n", out->x);
+        //fprintf(stderr, "null_vec length: %u\n", Vector_length(null_vec));
 
         fprintf(stderr, ">>>>>>>>>> Tests Passed.\n\n");
         free(test2);
-        Vector_free(&null_vec);
+        //Vector_free(&null_vec);
 }
 
 void test_vector_hi(Vector_T vec)
@@ -227,20 +227,20 @@ void test_vector_hi(Vector_T vec)
         //out = Vector_gethi(null_vec); //expected assertion
 
         //Empty vector
-        null_vec = Vector_new(0);
-        out = Vector_gethi(null_vec);
+        //null_vec = Vector_new(0);
+        //out = Vector_gethi(null_vec);
         //assert(out != NULL); //expected assertion
-        fprintf(stderr, "null_vec length: %u\n", Vector_length(null_vec));
+        //fprintf(stderr, "null_vec length: %u\n", Vector_length(null_vec));
 
         //Vector_setlo(null_vec, null_test); //expected assertion
-        Vector_sethi(null_vec, test2); //should work
-        out = Vector_gethi(null_vec); //should work
-        fprintf(stderr, "first elem in null_vec: %u\n", out->x);
-        fprintf(stderr, "null_vec length: %u\n", Vector_length(null_vec));
+        //Vector_sethi(null_vec, test2); //should work
+        //out = Vector_gethi(null_vec); //should work
+        //fprintf(stderr, "first elem in null_vec: %u\n", out->x);
+        //fprintf(stderr, "null_vec length: %u\n", Vector_length(null_vec));
 
         fprintf(stderr, ">>>>>>>>>> Tests Passed.\n\n");
         free(test2);
-        Vector_free(&null_vec);
+        //Vector_free(&null_vec);
 }
 
 void test_vector_remove(Vector_T vec)
@@ -269,10 +269,10 @@ void test_vector_remove(Vector_T vec)
         fprintf(stderr, "length2: %u\n", Vector_length(vec));
 
         fprintf(stderr, "removing all\n");
-        free(out);
-        while (Vector_length(vec) != 0)
-                Vector_remove(vec, 0);
-        fprintf(stderr, "length3: %u\n", Vector_length(vec));
+        //free(out);
+        //while (Vector_length(vec) != 0)
+        //        Vector_remove(vec, 0);
+        //fprintf(stderr, "length3: %u\n", Vector_length(vec));
 
         //Edge Cases
         (void) null_vec;
