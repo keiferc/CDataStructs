@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
 	fprintf(stderr, "\n"); //formatting
 
 	//Unit Tests
-	//test_list_length(list);
+	test_list_length(list);
 	//test_list_set(list, test1);
 	//test_list_get(list);
 	//test_list_lo(list);
