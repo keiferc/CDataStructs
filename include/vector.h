@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <limits.h>
 #include <assert.h>
 
 #ifndef VECTOR_H_
@@ -33,15 +34,15 @@ typedef struct vector_t *Vector_T;
  * Given a hint of the default size, creates and returns
  * a pointer to an instance of a Vector
  *
- * CREs         n/a
+ * CREs         0 <= hint < INT_MAX
  * UREs         n/a
  *
- * @param       unsigned        Hint of the default size of
+ * @param       int             Hint of the default size of
  * 				the Vector
  * @return      Vector_T        A pointer to an instance of
  * 				an expandable array
  */
-Vector_T Vector_new(unsigned hint);
+Vector_T Vector_new(int hint);
 
 /*
  * Vector_free
@@ -71,9 +72,9 @@ void Vector_free(Vector_T *vec);
  *
  * @param       Vector_T        Vector whose length is to
  *                              be returned
- * @return      unsigned        Length of the Vector
+ * @return      int             Length of the Vector
  */
-unsigned Vector_length(Vector_T vec);
+int Vector_length(Vector_T vec);
 
 /*
  * Vector_get
@@ -87,10 +88,10 @@ unsigned Vector_length(Vector_T vec);
  *
  * @param       Vector_T        Vector containing queried
  *                              element
- * @param       unsigned        Index of element in Vector
+ * @param       int             Index of element in Vector
  * @return      void *          void pointer to element
  */
-void *Vector_get(Vector_T vec, unsigned index);
+void *Vector_get(Vector_T vec, int index);
 
 /*
  * Vector_gethi
@@ -138,10 +139,10 @@ void *Vector_getlo(Vector_T vec);
  * @param       Vector_T        Vector in which to insert
  *                              element
  * @param       void *          Element to insert
- * @param       unsigned        Index of element in Vector
+ * @param       int             Index of element in Vector
  * @return      n/a
  */
-void Vector_set(Vector_T vec, void *elem, unsigned index);
+void Vector_set(Vector_T vec, void *elem, int index);
 
 /*
  * Vector_sethi
@@ -190,10 +191,10 @@ void Vector_setlo(Vector_T vec, void *elem);
  *
  * @param       Vector_T        Vector containing queried
  *                              element
- * @param       unsigned        Index of element in Vector
+ * @param       int        Index of element in Vector
  * @return      n/a
  */
-void Vector_remove(Vector_T vec, unsigned index);
+void Vector_remove(Vector_T vec, int index);
 
 /*
  * Vector_removehi

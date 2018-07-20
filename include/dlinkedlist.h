@@ -33,7 +33,7 @@ typedef struct dlinkedlist_t *DLinkedList_T;
  * Given a hint of the default size, creates and returns
  * a pointer to an instance of a DLinkedList
  *
- * CREs         0 <= hint < INT_MAX
+ * CREs         0 > hint >= INT_MAX
  * UREs         n/a
  *
  * @param       int             Hint of the default size of
@@ -132,7 +132,7 @@ void *DLinkedList_getlo(DLinkedList_T list);
  * DLinkedList
  *
  * CREs         list == NULL
- *              index in bounds
+ *              index out of bounds
  * UREs         n/a
  *
  * @param       DLinkedList_T   DLinkedList in which to insert
@@ -184,7 +184,7 @@ void DLinkedList_setlo(DLinkedList_T list, void *elem);
  * in the given index
  *
  * CREs         list == NULL
- *              index within bounds
+ *              index out of bounds
  * UREs         n/a
  *
  * @param       DLinkedList_T   DLinkedList containing queried
