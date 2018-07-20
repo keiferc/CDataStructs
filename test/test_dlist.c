@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 
 	(void) argc, (void) argv;
 
-	list = DLinkedList_new(100); //5
+	list = DLinkedList_new(7);
 	assert(list != NULL);
 
 	test1 = malloc(sizeof(struct test));
@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
 
 	//Unit Tests
 	test_list_length(list);
-	//test_list_set(list, test1);
+	test_list_set(list, test1);
 	//test_list_get(list);
 	//test_list_lo(list);
 	//test_list_hi(list);
@@ -95,9 +95,10 @@ void test_list_set(DLinkedList_T list, Test_T test1)
 	DLinkedList_set(list, test1, DLinkedList_length(list));
 	fprintf(stderr, "new length: %u\n", DLinkedList_length(list));
 
-	for (i = 0; i < 10; i++) {
-		DLinkedList_set(list, test1, i);
-	}
+	// for (i = 0; i < 10; i++) {
+	// 	DLinkedList_set(list, test1, i);
+	// }
+	(void) i;
 
 	//Edge Cases
 	(void) null_list;
