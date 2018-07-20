@@ -19,9 +19,9 @@
  *                      malloc'd list. See "design" for an example of
  *                      a three-element linked list. 
  * 
- *      design:         front <-> [ ] <-> [ ] <-> [ ] <-> [ ] <-> tail
- *                                         ^               ^
- *                                    list_start       list_end
+ *      design:         NULL <- [ ] <-> [ ] <-> [ ] <-> [ ] -> NULL
+ *                               ^       ^               ^
+ *                             front list_start  list_end & tail
  */
 
 #include "dlinkedlist.h"
@@ -29,8 +29,6 @@
 /*-------------------------------------
  * Representation
  -------------------------------------*/
-#define SEARCH_COEFFICIENT 100000 //TOTEST
-
 typedef struct node_t {
         void *elem;
         struct node_t *next;
@@ -62,38 +60,26 @@ void Node_free(DLinkedList_T list, Node_T *curr);
 /*
  * Mallocs "hint" empty nodes. Helper to constructor
  */
-Node_T malloc_hint(Node_T prev, unsigned hint);
+Node_T malloc_hint(DLinkedList_T list, unsigned hint);
 
 /*
  * Quickly returns the node at the given index by selecting
- * the fastest algorithm in relation to the number of elements
- * in the list
+ * the traversal direction based on the index
  * 
  * Best case:   O(1)
  * Worst case:  O(n)
  */
-Node_T quick_search(DLinkedList_T list, unsigned index);
+Node_T search(DLinkedList_T list, unsigned index);
 
 /*
  * Quickly returns the node at the given index by selecting
  * the traversal direction based on the given index in 
- * relation to the midpoint of the list. Helper to quick_search
+ * relation to the midpoint of the list. Helper to search
  * 
  * Best case:   O(1)
  * Worst case:  O(n)
  */
 Node_T split_search(DLinkedList_T list, unsigned index);
-
-/*
- * Binary search algorithm; used when number of elements
- * reduces malloc speed trade-off, thus making binary
- * searches more efficient than split searches. Helper
- * to quick_search
- * 
- * Best case:   O(1)
- * Worst case:  O(logn)
- */
-Node_T binary_search(DLinkedList_T list, unsigned index);
 
 /*
  * Removes the given node from the list. Helper to 
@@ -113,8 +99,8 @@ DLinkedList_T DLinkedList_new(unsigned hint)
 
         list->capacity = hint;
         list->size = 0;
-        list->front = malloc_hint(NULL, hint);
-        list->tail = list->front + (hint * sizeof(struct node_t));
+        list->tail = NULL;
+        list->front = malloc_hint(list, hint);
         list->list_start = list->front;
         list->list_end = list->front;
 
@@ -148,6 +134,7 @@ unsigned DLinkedList_length(DLinkedList_T list)
         return list->size;
 }
 
+//TOTEST
 void *DLinkedList_get(DLinkedList_T list, unsigned index)
 {
         Node_T node = NULL;
@@ -158,10 +145,10 @@ void *DLinkedList_get(DLinkedList_T list, unsigned index)
         if (list->size == 0)
                 return NULL;
 
-        node = quick_search(list, index);
+        node = search(list, index);
         assert(node != NULL);
 
-        return node->elem;
+        return node->elem; 
 }
 
 void *DLinkedList_gethi(DLinkedList_T list)
@@ -261,20 +248,36 @@ void Node_free(DLinkedList_T list, Node_T *curr)
         temp = NULL;
 }
 
-Node_T malloc_hint(Node_T prev, unsigned hint)
+Node_T malloc_hint(DLinkedList_T list, unsigned hint)
 {
         Node_T node = NULL;
+        Node_T temp = NULL;
+        int i;
+
+        assert(list != NULL);
 
         if (hint == 0)
-                return NULL; 
+                return NULL;
 
-        node = Node_new(prev, malloc_hint(node, hint - 1), NULL);
+        node = Node_new(NULL, NULL, NULL);
         assert(node != NULL);
+
+        list->tail = node;
+        
+        if (hint > 1) {
+                for (i = (int) (hint - 2); i >= 0; i--) {
+                        temp = Node_new(NULL, node, NULL);
+                        assert(temp != NULL);
+
+                        node->prev = temp;
+                        node = temp;
+                }
+        }
 
         return node;
 }
 
-Node_T quick_search(DLinkedList_T list, unsigned index)
+Node_T search(DLinkedList_T list, unsigned index)
 {
         assert(list != NULL);
         assert(index < list->size);
@@ -285,10 +288,7 @@ Node_T quick_search(DLinkedList_T list, unsigned index)
         if (index == list->size - 1)
                 return list->list_end;
 
-        if (list->size > SEARCH_COEFFICIENT)
-                return binary_search(list, index);
-        else
-                return split_search(list, index);
+        return split_search(list, index);
 }
 
 Node_T split_search(DLinkedList_T list, unsigned index)
@@ -302,7 +302,7 @@ Node_T split_search(DLinkedList_T list, unsigned index)
 
         midpoint = list->size / 2;
 
-        if (index <= midpoint) {
+        if (index < midpoint) {
                 node = list->list_start;
                 for (i = 0; i < index; i++)
                         node = node->next;
@@ -315,13 +315,7 @@ Node_T split_search(DLinkedList_T list, unsigned index)
         return node;
 }
 
-//TODO
-Node_T binary_search(DLinkedList_T list, unsigned index)
-{
-        (void) list, (void) index;
-        return NULL;
-}
-
+//TOTEST
 void remove_node(DLinkedList_T list, Node_T curr)
 {
         assert(list != NULL);

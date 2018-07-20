@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 
 	(void) argc, (void) argv;
 
-	list = DLinkedList_new(5);
+	list = DLinkedList_new(100); //5
 	assert(list != NULL);
 
 	test1 = malloc(sizeof(struct test));
@@ -124,6 +124,9 @@ void test_list_get(DLinkedList_T list)
 	//Valid Cases
 	fprintf(stderr, "Valid Cases --------\n");
 	test2 = (Test_T) DLinkedList_get(list, index);
+	if (test2 == NULL)
+		fprintf(stderr, "SUCCESS!!!!!!!\n");
+
 	fprintf(stderr, "list[%u]->x: %u\n", index, test2->x);
 	fprintf(stderr, "list[%u]->y: %d\n", index, test2->y);
 
