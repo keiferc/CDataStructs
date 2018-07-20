@@ -103,7 +103,6 @@ void test_vector_set(Vector_T vec, Test_T test1)
         (void) null_vec;
         fprintf(stderr, "Edge Cases ---------\n");
         //Vector_set(vec, n_ptr, 1000); //expected assertion
-        //Vector_set(vec, NULL, 0); // expected assertion
         //Vector_set(null_vec, test1, 1); // expected assertion
         //Vector_set(vec, test1, -1); //expected assertion
 

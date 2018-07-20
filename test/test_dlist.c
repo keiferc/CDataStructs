@@ -1,3 +1,12 @@
+/*
+ *      filename:       dlinkedlist.h
+ *      author:         @keiferchiang
+ *      date:           20 Jul 2018
+ *      version:        0.0.1
+ *
+ *      description:    Interface for the Vector module
+ */
+
 #include "dlinkedlist.h"
 
 /*-------------------------------------
@@ -88,23 +97,20 @@ void test_list_set(DLinkedList_T list, Test_T test1)
 	//Valid Cases
 	fprintf(stderr, "Valid Cases --------\n");
 	DLinkedList_set(list, n_ptr, index);
-
 	DLinkedList_set(list, test1, index);
 
 	fprintf(stderr, "old length: %u\n", DLinkedList_length(list));
 	DLinkedList_set(list, test1, DLinkedList_length(list));
 	fprintf(stderr, "new length: %u\n", DLinkedList_length(list));
 
-	// for (i = 0; i < 10; i++) {
-	// 	DLinkedList_set(list, test1, i);
-	// }
-	(void) i;
+	for (i = 0; i < 10; i++) {
+		DLinkedList_set(list, test1, i);
+	}
 
 	//Edge Cases
 	(void) null_list;
 	fprintf(stderr, "Edge Cases ---------\n");
 	//DLinkedList_set(list, n_ptr, 1000); //expected assertion
-	//DLinkedList_set(list, NULL, 0); // expected assertion
 	//DLinkedList_set(null_list, test1, 1); // expected assertion
 	//DLinkedList_set(list, test1, -1); //expected assertion
 

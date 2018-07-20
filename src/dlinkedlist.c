@@ -1,7 +1,7 @@
 /*
  *      filename:       dlinkedlist.c
  *      author:         @keiferchiang
- *      date:           2 May 2018
+ *      date:           20 Jul 2018
  *      version:        0.0.1
  *
  *      description:    Implementation of the DLinkedList module
@@ -178,20 +178,35 @@ void DLinkedList_set(DLinkedList_T list, void *elem, int index)
         assert(index >= 0);
         assert(index <= list->size);
 
-        if (index == 0) {
-                //TODO
-        } else if (index == list->size) {
+        if (index == list->size) {
                 DLinkedList_append(list, elem);
         } else {
-                //TODO
-                (void) node;
+                node = search(list, index);
+                assert(node != NULL);
+                node->elem = elem;
         }
 }
 
 void DLinkedList_append(DLinkedList_T list, void *elem)
 {
-        //TODO
-        (void) list, (void) elem;
+        Node_T node = NULL;
+
+        assert(list != NULL);
+
+        if (list->list_end == list->tail) {
+                node = Node_new(list->tail, NULL, elem);
+                assert(node != NULL);
+                (list->tail)->next = node;
+                list->tail = node;
+                (list->capacity)++;
+        } else {
+                node = (list->list_end)->next;
+                assert(node != NULL);
+                node->elem = elem;
+        }
+
+        list->list_end = (list->list_end)->next;
+        (list->size)++;
 }
 
 void DLinkedList_prepend(DLinkedList_T list, void *elem)
