@@ -83,7 +83,7 @@ void *Vector_get(Vector_T vec, int index)
         return vec->array[index];
 }
 
-void *Vector_gethi(Vector_T vec)
+void *Vector_last(Vector_T vec)
 {
         assert(vec != NULL);
 
@@ -93,7 +93,7 @@ void *Vector_gethi(Vector_T vec)
         return vec->array[(vec->size - 1)];
 }
 
-void *Vector_getlo(Vector_T vec)
+void *Vector_first(Vector_T vec)
 {
         assert(vec != NULL);
 
@@ -121,14 +121,14 @@ void Vector_set(Vector_T vec, void *elem, int index)
         vec->array[index] = elem;
 }
 
-void Vector_sethi(Vector_T vec, void *elem)
+void Vector_append(Vector_T vec, void *elem)
 {
         assert(vec != NULL);
 
         Vector_set(vec, elem, vec->size);
 }
 
-void Vector_setlo(Vector_T vec, void *elem)
+void Vector_prepend(Vector_T vec, void *elem)
 {
         int length;
         int i;

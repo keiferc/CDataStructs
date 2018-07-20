@@ -94,7 +94,7 @@ int Vector_length(Vector_T vec);
 void *Vector_get(Vector_T vec, int index);
 
 /*
- * Vector_gethi
+ * Vector_last
  *
  * Returns a void pointer to the element at index (length - 1)
  * of the given Vector. Returns NULL if Vector is empty
@@ -106,10 +106,10 @@ void *Vector_get(Vector_T vec, int index);
  *                              element
  * @return      void *          void pointer to element
  */
-void *Vector_gethi(Vector_T vec);
+void *Vector_last(Vector_T vec);
 
 /*
- * Vector_getlo
+ * Vector_first
  *
  * Returns a void pointer to the element at index 0 of the
  * given Vector. Returns NULL if Vector is empty
@@ -121,7 +121,7 @@ void *Vector_gethi(Vector_T vec);
  *                              element
  * @return      void *          void pointer to element
  */
-void *Vector_getlo(Vector_T vec);
+void *Vector_first(Vector_T vec);
 
 //////////////////////////////////
 //      Setter Functions        //
@@ -130,7 +130,7 @@ void *Vector_getlo(Vector_T vec);
  * Vector_set
  *
  * Inserts the given element into the given index of the
- * Vector
+ * Vector. Valid indices range from 0 to length
  *
  * CREs         vec == NULL
  *              0 > index > length of vector + 1
@@ -145,7 +145,7 @@ void *Vector_getlo(Vector_T vec);
 void Vector_set(Vector_T vec, void *elem, int index);
 
 /*
- * Vector_sethi
+ * Vector_append
  *
  * Inserts the given element into the end of the
  * Vector
@@ -158,10 +158,10 @@ void Vector_set(Vector_T vec, void *elem, int index);
  * @param       void *          Element to insert
  * @return      n/a
  */
-void Vector_sethi(Vector_T vec, void *elem);
+void Vector_append(Vector_T vec, void *elem);
 
 /*
- * Vector_setlo
+ * Vector_prepend
  *
  * Inserts the given element into the front of the
  * Vector
@@ -174,7 +174,7 @@ void Vector_sethi(Vector_T vec, void *elem);
  * @param       void *          Element to insert
  * @return      n/a
  */
-void Vector_setlo(Vector_T vec, void *elem);
+void Vector_prepend(Vector_T vec, void *elem);
 
 //////////////////////////////////
 //      Remove Functions        //
