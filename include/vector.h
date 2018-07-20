@@ -34,7 +34,7 @@ typedef struct vector_t *Vector_T;
  * Given a hint of the default size, creates and returns
  * a pointer to an instance of a Vector
  *
- * CREs         0 <= hint < INT_MAX
+ * CREs         0 > hint >= INT_MAX
  * UREs         n/a
  *
  * @param       int             Hint of the default size of
@@ -133,7 +133,7 @@ void *Vector_getlo(Vector_T vec);
  * Vector
  *
  * CREs         vec == NULL
- *              index > length of vector + 1
+ *              0 > index > length of vector + 1
  * UREs         n/a
  *
  * @param       Vector_T        Vector in which to insert
@@ -187,11 +187,12 @@ void Vector_setlo(Vector_T vec, void *elem);
  * in the given index
  *
  * CREs         vec == NULL
+ *              index out of bounds
  * UREs         n/a
  *
  * @param       Vector_T        Vector containing queried
  *                              element
- * @param       int        Index of element in Vector
+ * @param       int             Index of element in Vector
  * @return      n/a
  */
 void Vector_remove(Vector_T vec, int index);

@@ -16,8 +16,8 @@ typedef void **Array_T;
 
 struct vector_t {
         Array_T array;
-        unsigned capacity;
-        unsigned size;
+        int capacity;
+        int size;
 };
 
 /*-------------------------------------
@@ -31,9 +31,12 @@ static inline void expand(Vector_T vec);
 /*-------------------------------------
  * Function Definitions
  -------------------------------------*/
-Vector_T Vector_new(unsigned hint)
+Vector_T Vector_new(int hint)
 {
         Vector_T vec;
+
+        assert(hint >= 0);
+        assert(hint < INT_MAX);
 
         vec = malloc(sizeof(struct vector_t));
         assert(vec != NULL);
@@ -61,16 +64,17 @@ void Vector_free(Vector_T *vec)
 //////////////////////////////////
 //      Getter Functions        //
 //////////////////////////////////
-unsigned Vector_length(Vector_T vec)
+int Vector_length(Vector_T vec)
 {
         assert(vec != NULL);
 
         return vec->size;
 }
 
-void *Vector_get(Vector_T vec, unsigned index)
+void *Vector_get(Vector_T vec, int index)
 {
         assert(vec != NULL);
+        assert(index >= 0);
         assert(index < vec->size);
 
         if (vec->size == 0)
@@ -102,9 +106,10 @@ void *Vector_getlo(Vector_T vec)
 //////////////////////////////////
 //      Setter Functions        //
 //////////////////////////////////
-void Vector_set(Vector_T vec, void *elem, unsigned index)
+void Vector_set(Vector_T vec, void *elem, int index)
 {
         assert(vec != NULL);
+        assert(index >= 0);
         assert(index <= vec->size);
 
         if (index == vec->size)
@@ -125,8 +130,8 @@ void Vector_sethi(Vector_T vec, void *elem)
 
 void Vector_setlo(Vector_T vec, void *elem)
 {
-        unsigned length;
-        unsigned i;
+        int length;
+        int i;
 
         assert(vec != NULL);
 
@@ -141,12 +146,13 @@ void Vector_setlo(Vector_T vec, void *elem)
 //////////////////////////////////
 //      Remove Functions        //
 //////////////////////////////////
-void Vector_remove(Vector_T vec, unsigned index)
+void Vector_remove(Vector_T vec, int index)
 {
-        unsigned length;
-        unsigned i;
+        int length;
+        int i;
 
         assert(vec != NULL);
+        assert(index >= 0);
         assert(index < vec->size);
 
         length = vec->size;
@@ -160,7 +166,7 @@ void Vector_remove(Vector_T vec, unsigned index)
 void Vector_removehi(Vector_T vec)
 {
         assert(vec != NULL);
-        assert(vec->size != 0);
+        assert(vec->size > 0);
 
         (vec->size)--;
 }
@@ -168,7 +174,7 @@ void Vector_removehi(Vector_T vec)
 void Vector_removelo(Vector_T vec)
 {
         assert(vec != NULL);
-        assert(vec->size != 0);
+        assert(vec->size > 0);
 
         Vector_remove(vec, 0);
 }
@@ -179,7 +185,7 @@ void Vector_removelo(Vector_T vec)
 static inline void expand(Vector_T vec)
 {
         Array_T new_arr;
-        unsigned new_cap;
+        int new_cap;
 
         assert(vec != NULL);
 
