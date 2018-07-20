@@ -162,12 +162,12 @@ void test_list_lo(DLinkedList_T list)
 	test2->x = 4321;
 	test2->y = -1234;
 
-	fprintf(stderr, ">>>>>>>>>>>>>>>>>>>> Testing getlo and setlo\n");
+	fprintf(stderr, ">>>>>>>>>>>>>>>>>>>> Testing first and prepend\n");
 
 	//Valid Cases
 	fprintf(stderr, "Valid Cases --------\n");
-	DLinkedList_setlo(list, test2);
-	out = DLinkedList_getlo(list);
+	DLinkedList_prepend(list, test2);
+	out = DLinkedList_first(list);
 	fprintf(stderr, "lo x: %u\nlo y: %d\n", out->x, out->y);
 	fprintf(stderr, "list length: %u\n", DLinkedList_length(list));
 
@@ -177,20 +177,20 @@ void test_list_lo(DLinkedList_T list)
 	//Edge Cases
 	(void) null_list, (void) null_test;
 	fprintf(stderr, "Edge Cases ---------\n");
-	//DLinkedList_setlo(null_list, test2); //expected assertion
-	//DLinkedList_setlo(list, null_test); //expected assertion
-	//DLinkedList_setlo(null_list, null_test); //expected assertion
-	//out = DLinkedList_getlo(null_list); //expected assertion
+	//DLinkedList_prepend(null_list, test2); //expected assertion
+	//DLinkedList_prepend(list, null_test); //expected assertion
+	//DLinkedList_prepend(null_list, null_test); //expected assertion
+	//out = DLinkedList_first(null_list); //expected assertion
 
 	//Empty list
 	null_list = DLinkedList_new(0);
-	out = DLinkedList_getlo(null_list);
+	out = DLinkedList_first(null_list);
 	//assert(out != NULL); //expected assertion
 	fprintf(stderr, "null_list length: %u\n", DLinkedList_length(null_list));
 
-	//DLinkedList_setlo(null_list, null_test); //expected assertion
-	DLinkedList_setlo(null_list, test2); //should work
-	out = DLinkedList_getlo(null_list); //should work
+	//DLinkedList_prepend(null_list, null_test); //expected assertion
+	DLinkedList_prepend(null_list, test2); //should work
+	out = DLinkedList_first(null_list); //should work
 	fprintf(stderr, "first elem in null_list: %u\n", out->x);
 	fprintf(stderr, "null_list length: %u\n", DLinkedList_length(null_list));
 
@@ -209,15 +209,15 @@ void test_list_hi(DLinkedList_T list)
 	test2->x = 42;
 	test2->y = -42;
 
-	fprintf(stderr, ">>>>>>>>>>>>>>>>>>>> Testing gethi and sethi\n");
+	fprintf(stderr, ">>>>>>>>>>>>>>>>>>>> Testing last and append\n");
 
 	//Valid Cases
 	fprintf(stderr, "Valid Cases --------\n");
-	out = DLinkedList_gethi(list);
+	out = DLinkedList_last(list);
 	fprintf(stderr, "hi1 x: %u\nhi1 y: %d\n", out->x, out->y);
 	fprintf(stderr, "list length: %u\n", DLinkedList_length(list));
-	DLinkedList_sethi(list, test2);
-	out = DLinkedList_gethi(list);
+	DLinkedList_append(list, test2);
+	out = DLinkedList_last(list);
 	fprintf(stderr, "hi2 x: %u\nhi2 y: %d\n", out->x, out->y);
 	fprintf(stderr, "list length: %u\n", DLinkedList_length(list));
 
@@ -225,20 +225,20 @@ void test_list_hi(DLinkedList_T list)
 	//Edge Cases
 	(void) null_list, (void) null_test;
 	fprintf(stderr, "Edge Cases ---------\n");
-	//DLinkedList_sethi(null_list, test2); //expected assertion
-	//DLinkedList_sethi(list, null_test); //expected assertion
-	//DLinkedList_sethi(null_list, null_test); //expected assertion
-	//out = DLinkedList_gethi(null_list); //expected assertion
+	//DLinkedList_append(null_list, test2); //expected assertion
+	//DLinkedList_append(list, null_test); //expected assertion
+	//DLinkedList_append(null_list, null_test); //expected assertion
+	//out = DLinkedList_last(null_list); //expected assertion
 
 	//Empty list
 	null_list = DLinkedList_new(0);
-	out = DLinkedList_gethi(null_list);
+	out = DLinkedList_last(null_list);
 	//assert(out != NULL); //expected assertion
 	fprintf(stderr, "null_list length: %u\n", DLinkedList_length(null_list));
 
-	//DLinkedList_setlo(null_list, null_test); //expected assertion
-	DLinkedList_sethi(null_list, test2); //should work
-	out = DLinkedList_gethi(null_list); //should work
+	//DLinkedList_prepend(null_list, null_test); //expected assertion
+	DLinkedList_append(null_list, test2); //should work
+	out = DLinkedList_last(null_list); //should work
 	fprintf(stderr, "first elem in null_list: %u\n", out->x);
 	fprintf(stderr, "null_list length: %u\n", DLinkedList_length(null_list));
 
@@ -260,15 +260,15 @@ void test_list_remove(DLinkedList_T list)
 
 	//Valid Cases
 	fprintf(stderr, "Valid Cases --------\n");
-	DLinkedList_setlo(list, test2);
-	out = DLinkedList_getlo(list);
+	DLinkedList_prepend(list, test2);
+	out = DLinkedList_first(list);
 	fprintf(stderr, "length1: %u\n", DLinkedList_length(list));
 	fprintf(stderr, "lo1->x: %u\nlo1->y: %d\n", out->x, out->y);
 
 	free(test2);
 	test2 = NULL;
 	DLinkedList_remove(list, 0);
-	out = DLinkedList_getlo(list);
+	out = DLinkedList_first(list);
 	fprintf(stderr, "lo2->x: %u\nlo2->y: %d\n", out->x, out->y);
 	fprintf(stderr, "length2: %u\n", DLinkedList_length(list));
 
@@ -304,23 +304,23 @@ void test_list_pops(DLinkedList_T list)
 
 	//Valid Cases
 	fprintf(stderr, "Valid Cases --------\n");
-	DLinkedList_setlo(list, test2);
-	out = DLinkedList_getlo(list);
+	DLinkedList_prepend(list, test2);
+	out = DLinkedList_first(list);
 	fprintf(stderr, "length1: %u\n", DLinkedList_length(list));
 	fprintf(stderr, "lo1->x: %u\nlo1->y: %d\n", out->x, out->y);
 
 	DLinkedList_removelo(list);
-	out = DLinkedList_getlo(list);
+	out = DLinkedList_first(list);
 	fprintf(stderr, "lo2->x: %u\nlo2->y: %d\n", out->x, out->y);
 	fprintf(stderr, "length2: %u\n", DLinkedList_length(list));
 
-	DLinkedList_sethi(list, test2);
-	out = DLinkedList_gethi(list);
+	DLinkedList_append(list, test2);
+	out = DLinkedList_last(list);
 	fprintf(stderr, "length3: %u\n", DLinkedList_length(list));
 	fprintf(stderr, "lo3->x: %u\nlo3->y: %d\n", out->x, out->y);
 
 	DLinkedList_removehi(list);
-	out = DLinkedList_gethi(list);
+	out = DLinkedList_last(list);
 	fprintf(stderr, "lo4->x: %u\nlo4->y: %d\n", out->x, out->y);
 	fprintf(stderr, "length4: %u\n", DLinkedList_length(list));
 

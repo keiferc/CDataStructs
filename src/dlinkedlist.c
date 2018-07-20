@@ -24,10 +24,6 @@
  *                             front list_start  list_end & tail
  */
 
-//TODO:
-//      Change design to distinguish set and insert?
-//      if so, need to do same for vec
-
 #include "dlinkedlist.h"
 
 /*-------------------------------------
@@ -84,18 +80,6 @@ Node_T search(DLinkedList_T list, int index);
  * Worst case:  O(n)
  */
 Node_T split_search(DLinkedList_T list, int index);
-
-/*
- * Prepends a node with the given element to the given
- * list. Helper to DLinkedList_set & setlo
- */
-void prepend_node(DLinkedList_T list, void *elem);
-
-/*
- * Appends a node with the given element to the given
- * list. Helper to DLinkedList_set & sethi
- */
-void append_node(DLinkedList_T list, void *elem);
 
 /*
  * Removes the given node from the list. Helper to 
@@ -171,13 +155,13 @@ void *DLinkedList_get(DLinkedList_T list, int index)
         return node->elem; 
 }
 
-void *DLinkedList_gethi(DLinkedList_T list)
+void *DLinkedList_last(DLinkedList_T list)
 {
         (void) list;
         return NULL;
 }
 
-void *DLinkedList_getlo(DLinkedList_T list)
+void *DLinkedList_first(DLinkedList_T list)
 {
         (void) list;
         return NULL;
@@ -195,23 +179,41 @@ void DLinkedList_set(DLinkedList_T list, void *elem, int index)
         assert(index <= list->size);
 
         if (index == 0) {
-                prepend_node(list, elem);
+                //TODO
         } else if (index == list->size) {
-                append_node(list, elem);
+                DLinkedList_append(list, elem);
         } else {
                 //TODO
                 (void) node;
         }
 }
 
-void DLinkedList_sethi(DLinkedList_T list, void *elem)
+void DLinkedList_append(DLinkedList_T list, void *elem)
 {
+        //TODO
         (void) list, (void) elem;
 }
 
-void DLinkedList_setlo(DLinkedList_T list, void *elem)
+void DLinkedList_prepend(DLinkedList_T list, void *elem)
 {
-        (void) list, (void) elem;
+        Node_T node = NULL;
+
+        assert(list != NULL);
+
+        if (list->list_start == list->front) {
+                node = Node_new(NULL, list->front, elem);
+                assert(node != NULL);
+                (list->front)->prev = node;
+                list->front = node;
+                (list->capacity)++;
+        } else {
+                node = (list->list_start)->prev;
+                assert(node != NULL);
+                node->elem = elem;
+        }
+
+        list->list_start = (list->list_start)->prev;
+        (list->size)++;
 }
 
 //////////////////////////////////
@@ -350,34 +352,6 @@ Node_T split_search(DLinkedList_T list, int index)
         }
 
         return node;
-}
-
-void prepend_node(DLinkedList_T list, void *elem)
-{
-        Node_T node = NULL;
-
-        assert(list != NULL);
-
-        if (list->list_start == list->front) {
-                node = Node_new(NULL, list->front, elem);
-                assert(node != NULL);
-                (list->front)->prev = node;
-                list->front = node;
-                (list->capacity)++;
-        } else {
-                node = (list->list_start)->prev;
-                assert(node != NULL);
-                node->elem = elem;
-        }
-
-        list->list_start = (list->list_start)->prev;
-        (list->size)++;
-}
-
-void append_node(DLinkedList_T list, void *elem)
-{
-        //TODO
-        (void) list, (void) elem;
 }
 
 //TOTEST

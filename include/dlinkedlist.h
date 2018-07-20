@@ -93,7 +93,7 @@ int DLinkedList_length(DLinkedList_T list);
 void *DLinkedList_get(DLinkedList_T list, int index);
 
 /*
- * DLinkedList_gethi
+ * DLinkedList_last
  *
  * Returns a void pointer to the element at index (length - 1)
  * of the given DLinkedList. Returns NULL if DLinkedList is empty
@@ -105,10 +105,10 @@ void *DLinkedList_get(DLinkedList_T list, int index);
  *                              element
  * @return      void *          void pointer to element
  */
-void *DLinkedList_gethi(DLinkedList_T list);
+void *DLinkedList_last(DLinkedList_T list);
 
 /*
- * DLinkedList_getlo
+ * DLinkedList_first
  *
  * Returns a void pointer to the element at index 0 of the
  * given DLinkedList. Returns NULL if DLinkedList is empty
@@ -120,7 +120,7 @@ void *DLinkedList_gethi(DLinkedList_T list);
  *                              element
  * @return      void *          void pointer to element
  */
-void *DLinkedList_getlo(DLinkedList_T list);
+void *DLinkedList_first(DLinkedList_T list);
 
 //////////////////////////////////
 //      Setter Functions        //
@@ -144,7 +144,7 @@ void *DLinkedList_getlo(DLinkedList_T list);
 void DLinkedList_set(DLinkedList_T list, void *elem, int index);
 
 /*
- * DLinkedList_sethi
+ * DLinkedList_append
  *
  * Inserts the given element into the end of the DLinkedList
  *
@@ -156,10 +156,10 @@ void DLinkedList_set(DLinkedList_T list, void *elem, int index);
  * @param       void *          Element to insert
  * @return      n/a
  */
-void DLinkedList_sethi(DLinkedList_T list, void *elem);
+void DLinkedList_append(DLinkedList_T list, void *elem);
 
 /*
- * DLinkedList_setlo
+ * DLinkedList_prepend
  *
  * Inserts the given element into the front of the DLinkedList
  *
@@ -171,7 +171,7 @@ void DLinkedList_sethi(DLinkedList_T list, void *elem);
  * @param       void *          Element to insert
  * @return      n/a
  */
-void DLinkedList_setlo(DLinkedList_T list, void *elem);
+void DLinkedList_prepend(DLinkedList_T list, void *elem);
 
 //////////////////////////////////
 //      Remove Functions        //
