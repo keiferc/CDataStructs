@@ -40,8 +40,8 @@ struct dlinkedlist_t {
         Node_T tail;
         Node_T list_start;
         Node_T list_end;
-        unsigned capacity;
-        unsigned size;
+        int capacity;
+        int size;
 };
 
 /*-------------------------------------
@@ -60,7 +60,7 @@ void Node_free(DLinkedList_T list, Node_T *curr);
 /*
  * Mallocs "hint" empty nodes. Helper to constructor
  */
-Node_T malloc_hint(DLinkedList_T list, unsigned hint);
+Node_T malloc_hint(DLinkedList_T list, int hint);
 
 /*
  * Quickly returns the node at the given index by selecting
@@ -69,7 +69,7 @@ Node_T malloc_hint(DLinkedList_T list, unsigned hint);
  * Best case:   O(1)
  * Worst case:  O(n)
  */
-Node_T search(DLinkedList_T list, unsigned index);
+Node_T search(DLinkedList_T list, int index);
 
 /*
  * Quickly returns the node at the given index by selecting
@@ -79,7 +79,7 @@ Node_T search(DLinkedList_T list, unsigned index);
  * Best case:   O(1)
  * Worst case:  O(n)
  */
-Node_T split_search(DLinkedList_T list, unsigned index);
+Node_T split_search(DLinkedList_T list, int index);
 
 /*
  * Removes the given node from the list. Helper to 
@@ -90,9 +90,12 @@ void remove_node(DLinkedList_T list, Node_T curr);
 /*-------------------------------------
  * Function Definitions
  -------------------------------------*/
-DLinkedList_T DLinkedList_new(unsigned hint)
+DLinkedList_T DLinkedList_new(int hint)
 {
         DLinkedList_T list;
+
+        assert(hint >= 0);
+        assert(hint < INT_MAX);
 
         list = malloc(sizeof(struct dlinkedlist_t));
         assert(list != NULL);
@@ -127,7 +130,7 @@ void DLinkedList_free(DLinkedList_T *list)
 //////////////////////////////////
 //      Getter Functions        //
 //////////////////////////////////
-unsigned DLinkedList_length(DLinkedList_T list)
+int DLinkedList_length(DLinkedList_T list)
 {
         assert(list != NULL);
 
@@ -135,11 +138,12 @@ unsigned DLinkedList_length(DLinkedList_T list)
 }
 
 //TOTEST
-void *DLinkedList_get(DLinkedList_T list, unsigned index)
+void *DLinkedList_get(DLinkedList_T list, int index)
 {
         Node_T node = NULL;
 
         assert(list != NULL);
+        assert(index >= 0);
         assert(index < list->size);
 
         if (list->size == 0)
@@ -166,7 +170,7 @@ void *DLinkedList_getlo(DLinkedList_T list)
 //////////////////////////////////
 //      Setter Functions        //
 //////////////////////////////////
-void DLinkedList_set(DLinkedList_T list, void *elem, unsigned index)
+void DLinkedList_set(DLinkedList_T list, void *elem, int index)
 {
         (void) list, (void) elem, (void) index;
 }
@@ -184,7 +188,7 @@ void DLinkedList_setlo(DLinkedList_T list, void *elem)
 //////////////////////////////////
 //      Remove Functions        //
 //////////////////////////////////
-void DLinkedList_remove(DLinkedList_T list, unsigned index)
+void DLinkedList_remove(DLinkedList_T list, int index)
 {
         (void) list, (void) index;
 }
@@ -223,7 +227,7 @@ void Node_free(DLinkedList_T list, Node_T *curr)
         assert(list != NULL);
         assert(curr != NULL);
         assert(*curr != NULL);
-        assert(list->capacity != 0);
+        assert(list->capacity > 0);
 
         temp = *curr;
 
@@ -248,13 +252,15 @@ void Node_free(DLinkedList_T list, Node_T *curr)
         temp = NULL;
 }
 
-Node_T malloc_hint(DLinkedList_T list, unsigned hint)
+Node_T malloc_hint(DLinkedList_T list, int hint)
 {
         Node_T node = NULL;
         Node_T temp = NULL;
         int i;
 
         assert(list != NULL);
+        assert(hint >= 0);
+        assert(hint < INT_MAX);
 
         if (hint == 0)
                 return NULL;
@@ -265,7 +271,7 @@ Node_T malloc_hint(DLinkedList_T list, unsigned hint)
         list->tail = node;
         
         if (hint > 1) {
-                for (i = (int) (hint - 2); i >= 0; i--) {
+                for (i = hint - 2; i >= 0; i--) {
                         temp = Node_new(NULL, node, NULL);
                         assert(temp != NULL);
 
@@ -277,9 +283,10 @@ Node_T malloc_hint(DLinkedList_T list, unsigned hint)
         return node;
 }
 
-Node_T search(DLinkedList_T list, unsigned index)
+Node_T search(DLinkedList_T list, int index)
 {
         assert(list != NULL);
+        assert(index >= 0);
         assert(index < list->size);
 
         if (index == 0)
@@ -291,13 +298,14 @@ Node_T search(DLinkedList_T list, unsigned index)
         return split_search(list, index);
 }
 
-Node_T split_search(DLinkedList_T list, unsigned index)
+Node_T split_search(DLinkedList_T list, int index)
 {
         Node_T node = NULL;
-        unsigned midpoint;
-        unsigned i;
+        int midpoint;
+        int i;
 
         assert(list != NULL);
+        assert(index >= 0);
         assert(index < list->size);
 
         midpoint = list->size / 2;
@@ -320,16 +328,14 @@ void remove_node(DLinkedList_T list, Node_T curr)
 {
         assert(list != NULL);
         assert(curr != NULL);
-        assert(list->size != 0);
+        assert(list->size > 0);
 
-        if (list->size > 1) {
-                if (curr == list->list_start) {
-                        list->list_start = curr->next;
-                } else if (curr == list->list_end) {
-                        list->list_end = curr->prev;
-                } else {
-                        Node_free(list, &curr);  
-                }
+        if (curr == list->list_start) {
+                list->list_start = curr->next;
+        } else if (curr == list->list_end) {
+                list->list_end = curr->prev;
+        } else {
+                Node_free(list, &curr);  
         }
 
         list->size--;

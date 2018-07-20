@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <limits.h>
 #include <assert.h>
 
 #ifndef DLINKEDLIST_H_
@@ -32,15 +33,15 @@ typedef struct dlinkedlist_t *DLinkedList_T;
  * Given a hint of the default size, creates and returns
  * a pointer to an instance of a DLinkedList
  *
- * CREs         n/a
+ * CREs         0 <= hint < INT_MAX
  * UREs         n/a
  *
- * @param       unsigned        Hint of the default size of
+ * @param       int             Hint of the default size of
  * 				the DLinkedList
- * @return      DLinkedList_T    A pointer to an instance of
+ * @return      DLinkedList_T   A pointer to an instance of
  * 				a linked-list
  */
-DLinkedList_T DLinkedList_new(unsigned hint);
+DLinkedList_T DLinkedList_new(int hint);
 
 /*
  * DLinkedList_free
@@ -68,11 +69,11 @@ void DLinkedList_free(DLinkedList_T *list);
  * CREs         list == NULL
  * UREs         n/a
  *
- * @param       DLinkedList_T    DLinkedList whose length is to
+ * @param       DLinkedList_T   DLinkedList whose length is to
  *                              be returned
- * @return      unsigned        Length of the DLinkedList
+ * @return      int             Length of the DLinkedList
  */
-unsigned DLinkedList_length(DLinkedList_T list);
+int DLinkedList_length(DLinkedList_T list);
 
 /*
  * DLinkedList_get
@@ -84,12 +85,12 @@ unsigned DLinkedList_length(DLinkedList_T list);
  *              index out of bounds
  * UREs         getting an element that was previously freed
  *
- * @param       DLinkedList_T    DLinkedList containing queried
+ * @param       DLinkedList_T   DLinkedList containing queried
  *                              element
- * @param       unsigned        Index of element in DLinkedList
+ * @param       int             Index of element in DLinkedList
  * @return      void *          void pointer to element
  */
-void *DLinkedList_get(DLinkedList_T list, unsigned index);
+void *DLinkedList_get(DLinkedList_T list, int index);
 
 /*
  * DLinkedList_gethi
@@ -131,16 +132,16 @@ void *DLinkedList_getlo(DLinkedList_T list);
  * DLinkedList
  *
  * CREs         list == NULL
- *              index > length of list
+ *              index in bounds
  * UREs         n/a
  *
  * @param       DLinkedList_T   DLinkedList in which to insert
  *                              element
  * @param       void *          Element to insert
- * @param       unsigned        Index of element in DLinkedList
+ * @param       int             Index of element in DLinkedList
  * @return      n/a
  */
-void DLinkedList_set(DLinkedList_T list, void *elem, unsigned index);
+void DLinkedList_set(DLinkedList_T list, void *elem, int index);
 
 /*
  * DLinkedList_sethi
@@ -183,14 +184,15 @@ void DLinkedList_setlo(DLinkedList_T list, void *elem);
  * in the given index
  *
  * CREs         list == NULL
+ *              index within bounds
  * UREs         n/a
  *
  * @param       DLinkedList_T   DLinkedList containing queried
  *                              element
- * @param       unsigned        Index of element in DLinkedList
+ * @param       int             Index of element in DLinkedList
  * @return      n/a
  */
-void DLinkedList_remove(DLinkedList_T list, unsigned index);
+void DLinkedList_remove(DLinkedList_T list, int index);
 
 /*
  * DLinkedList_removehi
