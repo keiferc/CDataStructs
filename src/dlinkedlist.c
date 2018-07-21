@@ -63,6 +63,11 @@ void Node_free(DLinkedList_T list, Node_T *curr);
 Node_T malloc_hint(DLinkedList_T list, int hint);
 
 /*
+ * Init empty list with the given elem
+ */
+void init_empty_list(DLinkedList_T list, void *elem);
+
+/*
  * Quickly returns the node at the given index by selecting
  * the traversal direction based on the index
  * 
@@ -87,6 +92,12 @@ Node_T split_search(DLinkedList_T list, int index);
  */
 void remove_node(DLinkedList_T list, Node_T curr);
 
+
+/*-------------------------------------
+ * Debug Function Prototypes
+ -------------------------------------*/
+void print(DLinkedList_T list);
+
 /*-------------------------------------
  * Function Definitions
  -------------------------------------*/
@@ -99,6 +110,9 @@ DLinkedList_T DLinkedList_new(int hint)
 
         list = malloc(sizeof(struct dlinkedlist_t));
         assert(list != NULL);
+
+        if (hint == 0)
+                hint++;
 
         list->capacity = hint;
         list->size = 0;
@@ -137,7 +151,6 @@ int DLinkedList_length(DLinkedList_T list)
         return list->size;
 }
 
-//TOTEST
 void *DLinkedList_get(DLinkedList_T list, int index)
 {
         Node_T node = NULL;
@@ -157,14 +170,22 @@ void *DLinkedList_get(DLinkedList_T list, int index)
 
 void *DLinkedList_last(DLinkedList_T list)
 {
-        (void) list;
-        return NULL;
+        assert(list != NULL);
+
+        if (list->size == 0)
+                return NULL;
+
+        return (list->list_end)->elem;
 }
 
 void *DLinkedList_first(DLinkedList_T list)
 {
-        (void) list;
-        return NULL;
+        assert(list != NULL);
+
+        if (list->size == 0)
+                return NULL;
+
+        return (list->list_start)->elem;
 }
 
 //////////////////////////////////
@@ -193,19 +214,24 @@ void DLinkedList_append(DLinkedList_T list, void *elem)
 
         assert(list != NULL);
 
-        if (list->list_end == list->tail) {
+        if (list->size == 0) {
+                (list->tail)->elem = elem;
+        } else if (list->size == list->capacity) {
                 node = Node_new(list->tail, NULL, elem);
                 assert(node != NULL);
+
                 (list->tail)->next = node;
                 list->tail = node;
                 (list->capacity)++;
+                list->list_end = (list->list_end)->next;
         } else {
                 node = (list->list_end)->next;
                 assert(node != NULL);
+
                 node->elem = elem;
+                list->list_end = (list->list_end)->next;
         }
 
-        list->list_end = (list->list_end)->next;
         (list->size)++;
 }
 
@@ -215,19 +241,24 @@ void DLinkedList_prepend(DLinkedList_T list, void *elem)
 
         assert(list != NULL);
 
-        if (list->list_start == list->front) {
+        if (list->size == 0) {
+                (list->front)->elem = elem;
+        } else if (list->size == list->capacity) {
                 node = Node_new(NULL, list->front, elem);
                 assert(node != NULL);
+
                 (list->front)->prev = node;
                 list->front = node;
                 (list->capacity)++;
+                list->list_start = (list->list_start)->prev;
         } else {
                 node = (list->list_start)->prev;
                 assert(node != NULL);
+
                 node->elem = elem;
+                list->list_start = (list->list_start)->prev;
         }
 
-        list->list_start = (list->list_start)->prev;
         (list->size)++;
 }
 
@@ -266,6 +297,7 @@ Node_T Node_new(Node_T prev, Node_T next, void *elem)
         return node;
 }
 
+//TOCLEAN?
 void Node_free(DLinkedList_T list, Node_T *curr)
 {
         Node_T temp = NULL;
@@ -283,11 +315,16 @@ void Node_free(DLinkedList_T list, Node_T *curr)
                         *curr = temp->next;
                 } else if (temp == list->tail) {
                         (temp->prev)->next = NULL;
-                        *curr = (temp)->prev;
+                        *curr = temp->prev;
                 } else {
                         ((*curr)->next)->prev = (*curr)->prev;
                         (((*curr)->next)->prev)->next = (*curr)->next;
                 }
+
+                if (temp == list->list_start)
+                        list->list_start = temp->next;
+                if (temp == list->list_end)
+                        list->list_end = temp->prev;
         }
 
         list->capacity--;
@@ -307,9 +344,6 @@ Node_T malloc_hint(DLinkedList_T list, int hint)
         assert(list != NULL);
         assert(hint >= 0);
         assert(hint < INT_MAX);
-
-        if (hint == 0)
-                return NULL;
 
         node = Node_new(NULL, NULL, NULL);
         assert(node != NULL);
@@ -385,4 +419,35 @@ void remove_node(DLinkedList_T list, Node_T curr)
         }
 
         list->size--;
+}
+
+/*-------------------------------------
+ * Debug Function Definitions
+ -------------------------------------*/
+void print(DLinkedList_T list)
+{
+        Node_T node = NULL;
+
+        assert(list != NULL);
+
+        fprintf(stderr, "========= Printing List ========\n");
+        fprintf(stderr, "size:  %d\n", list->size);
+        fprintf(stderr, "cap:   %d\n", list->capacity);
+
+        node = list->front;
+        for (int i = 0; i < list->capacity; i++) {
+                fprintf(stderr, "list[%d]:      ", i);
+                if (node == list->front)
+                        fprintf(stderr, "front          ");
+                if (node == list->list_start)
+                        fprintf(stderr, "list_start     ");
+                if (node == list->list_end)
+                        fprintf(stderr, "list_end       ");
+                if (node == list->tail)
+                        fprintf(stderr, "tail           ");
+                fprintf(stderr, "\n");
+                node = node->next;
+        }
+        fprintf(stderr, "========= End Printing =========\n");
+
 }

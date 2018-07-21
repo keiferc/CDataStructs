@@ -51,14 +51,15 @@ int main(int argc, char *argv[]) {
 	test_list_length(list);
 	test_list_set(list, test1);
 	test_list_get(list);
-	//test_list_lo(list);
-	//test_list_hi(list);
+	test_list_lo(list);
+	test_list_hi(list);
 	//test_list_remove(list);
 	//test_list_pops(list);
 
 	//Cleanup
 	free(test1);
 	DLinkedList_free(&list);
+	return 0;
 }
 
 /*-------------------------------------
@@ -106,6 +107,8 @@ void test_list_set(DLinkedList_T list, Test_T test1)
 	for (i = 0; i < 10; i++) {
 		DLinkedList_set(list, test1, i);
 	}
+
+	fprintf(stderr, "final set length: %d\n", DLinkedList_length(list));
 
 	//Edge Cases
 	(void) null_list;
@@ -181,20 +184,22 @@ void test_list_lo(DLinkedList_T list)
 	//Edge Cases
 	(void) null_list, (void) null_test;
 	fprintf(stderr, "Edge Cases ---------\n");
-	//DLinkedList_prepend(null_list, test2); //expected assertion
-	//DLinkedList_prepend(list, null_test); //expected assertion
-	//DLinkedList_prepend(null_list, null_test); //expected assertion
+	//DLinkedList_prepend(null_list, test2); //should work
+	//DLinkedList_prepend(list, null_test); //should work
+	//DLinkedList_prepend(null_list, null_test); //should work
 	//out = DLinkedList_first(null_list); //expected assertion
 
 	//Empty list
 	null_list = DLinkedList_new(0);
+
 	out = DLinkedList_first(null_list);
 	//assert(out != NULL); //expected assertion
 	fprintf(stderr, "null_list length: %u\n", DLinkedList_length(null_list));
 
-	//DLinkedList_prepend(null_list, null_test); //expected assertion
+	DLinkedList_prepend(null_list, null_test); //should work
 	DLinkedList_prepend(null_list, test2); //should work
 	out = DLinkedList_first(null_list); //should work
+
 	fprintf(stderr, "first elem in null_list: %u\n", out->x);
 	fprintf(stderr, "null_list length: %u\n", DLinkedList_length(null_list));
 
@@ -225,7 +230,6 @@ void test_list_hi(DLinkedList_T list)
 	fprintf(stderr, "hi2 x: %u\nhi2 y: %d\n", out->x, out->y);
 	fprintf(stderr, "list length: %u\n", DLinkedList_length(list));
 
-
 	//Edge Cases
 	(void) null_list, (void) null_test;
 	fprintf(stderr, "Edge Cases ---------\n");
@@ -240,10 +244,10 @@ void test_list_hi(DLinkedList_T list)
 	//assert(out != NULL); //expected assertion
 	fprintf(stderr, "null_list length: %u\n", DLinkedList_length(null_list));
 
-	//DLinkedList_prepend(null_list, null_test); //expected assertion
+	DLinkedList_append(null_list, null_test); //should work
 	DLinkedList_append(null_list, test2); //should work
 	out = DLinkedList_last(null_list); //should work
-	fprintf(stderr, "first elem in null_list: %u\n", out->x);
+	fprintf(stderr, "last elem in null_list: %u\n", out->x);
 	fprintf(stderr, "null_list length: %u\n", DLinkedList_length(null_list));
 
 	fprintf(stderr, ">>>>>>>>>> Tests Passed.\n\n");
